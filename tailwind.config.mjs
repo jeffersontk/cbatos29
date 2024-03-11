@@ -5,6 +5,15 @@ export default {
 	content: ['./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}'],
 	theme: {
 		colors: {
+			white: '#fff',
+			primary: {
+				light: '#BF396B',
+				dark: '#7A2240'
+			},
+			bage: '#F2CEAE',
+			secondary: {
+				blue: '#202B40'
+			},
 			gray: {
 				50: '#f8fafc',
 				100: '#f1f5f9',
