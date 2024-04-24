@@ -1,7 +1,6 @@
-import blockContent from './blockContent'
-import category from './category'
-import post from './post'
-import author from './author'
-import project from './project'
+import ebd from './ebd'
+import cells from './cells'
+import events from './events'
+import carousel from './carousel '
 
-export const schemaTypes = [post, author, category, project, blockContent]
+export const schemaTypes = [ebd, cells, events, carousel]

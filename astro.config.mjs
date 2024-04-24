@@ -8,11 +8,12 @@ import vercel from '@astrojs/vercel/serverless';
 // https://astro.build/config
 export default defineConfig({
   output: 'server',
+  prefetch: true,
   integrations: [tailwind(), 
   sanityIntegration({
-    projectId: "05a00f6m",
+    projectId: "l9mtpnzh",
     dataset: "production",
-    apiVersion: '2024-02-05',
+    apiVersion: '2024-04-22',
     useCdn: false,
     // Access the Studio on your.url/admin
     studioBasePath: "/admin"

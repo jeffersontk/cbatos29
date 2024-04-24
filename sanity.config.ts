@@ -5,9 +5,9 @@ import {schemaTypes} from './sanity/schemas'
 
 export default defineConfig({
   name: 'default',
-  title: 'dev-jeffersonsbcabral',
+  title: 'cmsCBAT29',
 
-  projectId: '05a00f6m',
+  projectId: 'l9mtpnzh',
   dataset: 'production',
 
   plugins: [structureTool(), visionTool()],
