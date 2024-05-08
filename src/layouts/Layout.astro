@@ -1,6 +1,7 @@
 ---
 
 import Header from '../components/Header/index.astro'
+import Footer from '../components/Footer/index.astro'
 
 interface Props {
 	title: string;
@@ -24,8 +25,7 @@ const { title } = Astro.props;
 		<main class="w-full flex items-center justify-center">
 			<slot />
 		</main>
-		<footer class="">
-		</footer>
+		<Footer />
 	</body>
 </html>
 

@@ -1,0 +1,25 @@
+---
+import { sanityClient } from "sanity:client";
+import Layout from '../../layouts/Layout.astro';
+
+
+const ebd = await sanityClient.fetch(`*[_type == "ebd"  && defined(slug)] | order(publishedAt desc)`);
+
+---
+
+<Layout title="CB Atos 29">
+	<section class="w-full max-w-[1280px] flex flex-col xl:grid xl:grid-cols-2 xl:grid-rows-2 gap-4 items-center p-8 xl:px-0">
+		<h1>CB ATOS 29</h1>
+
+		<ul class="flex flex-col gap-4">
+			<h1>EBD</h1>
+			{ebd.map((ebd: any) => (
+				<li>
+					<a href={"/ebd/" + ebd.slug.current} class="post-link">
+						{ebd.title}
+					</a>
+				</li>
+			))}
+		</ul>
+	</section>	
+</Layout>
