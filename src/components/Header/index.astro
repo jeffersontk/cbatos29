@@ -6,9 +6,9 @@ const route = Astro.url;
 
 ---
 
-<header id="header" class="w-full h-16 flex items-center justify-center bg-gradient-to-r from-primary-light to-primary-dark px-4">
+<header id="header" class="w-full h-16 flex items-center justify-center bg-gradient-to-r from-primary-light to-primary-dark ">
   <nav class="max-w-[1280px] w-full flex items-center justify-between">
-    <a href="/">
+    <a href="/" class="ml-4">
       <img src="/cbatos29logo.png" alt="comunidade bastista Atos 29 logo">
     </a>
     <Navigation client:load pathname={route.pathname}/>
