@@ -45,9 +45,11 @@ const handleCopy = (text:string) => {
 			</div>
 			<a href="/ebd" class="h-12 w-full max-w-96 rounded-full bg-primary-light text-white font-bold text-base flex justify-center items-center">Faça sua inscrição</a>
 		</div>
-		<div class="w-full p-8 flex flex-col bg-secondary-blue justify-center items-center gap-4 text-white font-bold text-base">
-			<Image src={callToCelula} alt="Vem pra celula" class="object-fill max-h-[414px]">
-			<a href="/celula">Encontre uma célula próxima a você</a>
+		<div class="w-full h-full p-8 flex flex-col items-center bg-secondary-blue">
+			<div>
+				<Image src={callToCelula} alt="Vem pra celula" class="object-fill max-h-[414px] mb-4">
+			</div>
+			<a href="/celula" class="text-white font-bold text-base">Encontre uma célula próxima a você</a>
 		</div>
 		<div class="px-8">
 			<div class="bg-gradient-to-r from-primary-light to-primary-dark p-4 rounded-md flex flex-col gap-4 max-w-96 ">
