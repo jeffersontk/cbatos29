@@ -38,7 +38,7 @@ export const Navigation = ({pathname}) => {
         </div>
       </div>
 
-      <div className={`${isOpen ? "absolute z-50 bg-primary-dark top-0 right-0 h-[100vh] w-[200px] p-4" : "hidden"} md:hidden`}>
+      <div className={`${isOpen ? "absolute z-50 bg-primary-dark top-0 right-0 h-[100vh] w-[200px] p-4  transform translate-all duration-500" : "hidden"} md:hidden`}>
         <header className="flex justify-end">
           <button onClick={toggleMenu}>
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-12 h-12 text-gray-50">
