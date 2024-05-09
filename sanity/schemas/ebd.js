@@ -24,5 +24,11 @@ export default defineType({
       title: 'Description',
       type: 'text',
     }),
+    defineField({
+      name: 'content',
+      title: 'Content',
+      type: 'array',
+      of: [{ type: 'string', options: { hotspot: true } }],
+    }),
   ],
 })
