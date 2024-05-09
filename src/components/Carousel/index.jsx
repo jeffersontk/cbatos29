@@ -1,14 +1,11 @@
+import { Image } from "astro:assets";
 import React, { useState, useEffect, useRef } from "react";
+import { urlForImage } from "../../lib/urlForImage";
 
-export const Carousel = () => {
+export const Carousel = ({images}) => {
     const [currentImage, setCurrentImage] = useState(0);
 
-    const images = [
-        "/public/slider/infinitamente-mais.jpeg",
-        "/public/slider/vem-pro-culto.jpg",
-        "/public/slider/ebd.jpg",
-    ];
-
+ 
     const nextImage = () => {
         setCurrentImage((prev) => (prev === images.length - 1 ? 0 : prev + 1));
     };
@@ -32,11 +29,11 @@ export const Carousel = () => {
    
             <div className="overflow-hidden w-full max-h-[488px] md:h-[488px]">
                 <div className="flex max-h-[488px]" style={{ transform: `translateX(-${currentImage * 100}%)`, transition: "transform 0.5s ease" }}>
-                    {images.map((image, index) => (
+                    {images.map((image) => (
                         <img
-                            key={index}
-                            src={image}
-                            alt={`Imagem ${index + 1}`}
+                            key={image._key}
+                            src={urlForImage(image.asset._ref)}
+                            alt={`Imagem ${image.asset._ref}`}
                             className="image w-full"
                         />
                     ))}
@@ -45,7 +42,7 @@ export const Carousel = () => {
             <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex gap-4">
                 {images.map((_, index) => (
                     <button
-                        key={index}
+                        key={_._key}
                         onClick={() => setCurrentImage(index)}
                         className={`w-4 h-4 rounded-full ${
                             index === currentImage ? "bg-gray-500 w-8 transform transition-all duration-500" : "bg-gray-700 opacity-50"

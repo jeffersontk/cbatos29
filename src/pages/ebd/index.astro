@@ -3,7 +3,7 @@ import { sanityClient } from "sanity:client";
 import Layout from '../../layouts/Layout.astro';
 
 
-const ebd = await sanityClient.fetch(`*[_type == "ebd"  && defined(slug)] | order(publishedAt desc)`);
+const ebd = await sanityClient.fetch(`*[_type == "ebd" && defined(slug)] | order(publishedAt desc)`);
 
 ---
 
