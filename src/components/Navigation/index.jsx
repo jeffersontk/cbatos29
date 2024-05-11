@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 
+
+
 export const Navigation = ({pathname}) => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -9,7 +11,7 @@ export const Navigation = ({pathname}) => {
 
   return (
     <div className="relative">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto pr-8 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center py-4 md:justify-start md:space-x-10">
           <div className="-mr-2 -my-2 md:hidden">
             <button
@@ -38,7 +40,7 @@ export const Navigation = ({pathname}) => {
         </div>
       </div>
 
-      <div className={`${isOpen ? "absolute z-50 bg-primary-dark top-0 right-0 h-[100vh] w-[200px] p-4  transform translate-all duration-500" : "hidden"} md:hidden`}>
+      <div className={`${isOpen ? "absolute z-50 bg-primary-dark top-0 right-0 h-[100vh] w-[200px] px-4 py-2  transform translate-all duration-500" : "hidden"} md:hidden`}>
         <header className="flex justify-end">
           <button onClick={toggleMenu}>
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-12 h-12 text-gray-50">
@@ -50,7 +52,7 @@ export const Navigation = ({pathname}) => {
           <a href="/" className={`block text-base font-medium text-white hover:text-gray-300 ${pathname === '/' ? 'border-b-2 border-white' : ''}`}>
             Início
           </a>
-          <a href="/ebd"  className={`block text-base font-medium text-white hover:text-gray-300 ${pathname === '/ebd' ? 'border-b-2 border-white' : ''}`}>
+          <a href="/ebd"  className={`block text-base font-medium text-white hover:text-gray-300 ${String(pathname).includes('/ebd') ? 'border-b-2 border-white' : ''}`}>
             EBD
           </a>
           <a href="/celula"  className={`block text-base font-medium text-white hover:text-gray-300 ${pathname === '/celula' ? 'border-b-2 border-white' : ''}`}>

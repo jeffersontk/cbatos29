@@ -1,14 +1,14 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import { Carousel } from '../components/Carousel';
-import { sanityClient } from 'sanity:client';
 import {Offer} from '../components/Offer';
 import { Image } from 'astro:assets';
 import { urlForImage } from "../lib/urlForImage";
+import { getCarouselImages, getHomeCelula, getHomeOffer } from '../actions/gets';
 
-const carousel = await sanityClient.fetch(`*[_type == "carousel"][0]`);
-const homeCelula = await sanityClient.fetch(`*[_type == "homeCelula"][0]`);
-const offer = await sanityClient.fetch(`*[_type == "offer"][0]`);
+const carousel = await getCarouselImages();
+const homeCelula = await getHomeCelula();
+const offer = await getHomeOffer();
 const carouselAssets = carousel.images
 
 const {title, celulaImage} = homeCelula

@@ -1,12 +1,63 @@
 ---
 import Layout from '../../../layouts/Layout.astro';
+import {postIntentionToEnrollEBD} from '../../../actions/post'
+import FormIntentionToEnroll from '../../../components/IntentionToEnroll';
 
-const {ebd} = Astro.params;
-console.log('ebd', ebd)
+const {ebd: selectedClass} = Astro.params;
+
+const phoneRegex = /^\(?\d{2}\)?[-.\s]?\d{4,5}[-.\s]?\d{4}$/;
+const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+let errors = { name: "", email: "", phone: "", enrollmentIntention: "",  coursesParticipated: [] };
+
+if(Astro.request.method === 'POST'){
+  try {
+    const data = await Astro.request.formData();
+    const name = data.get('name')?.toString();
+    const email = data.get('email')?.toString();
+    const phone = data.get('phone')?.toString();
+    const enrollmentIntention = data.get('enrollmentIntention')?.toString();
+    const coursesParticipated = data.getAll('coursesParticipated');
+
+    const errors = {} as any;
+
+    if (!name || name.trim() === "") {
+      errors.name = "Please enter a username.";
+    }
+
+    if (!email || !emailRegex.test(email)) {
+      errors.email = "Invalid email address.";
+    }
+
+    if (!phone || !phoneRegex.test(phone)) {
+      errors.phone = "Invalid phone number.";
+    }
+
+    const hasErrors = Object.keys(errors).length > 0;
+
+    if (!hasErrors) {
+    const formData = {
+        _type: 'ebdRegistration',
+        name,
+        email,
+        phone,
+        enrollmentIntention,
+        coursesParticipated
+      };
+      const response = await postIntentionToEnrollEBD(formData)
+      Astro.redirect(`/ebd/${selectedClass}/success`)
+    }
+
+  } catch (error) {
+    if (error instanceof Error) {
+      console.error(error.message);
+    }
+  }
+}
+
 ---
 
 <Layout title="CB Atos 29">
-  <div class="w-full p-8 flex flex-col gap-4">
+  <div class="w-full max-w-[1280px] px-8 pt-8 flex flex-col gap-4">
     <a href={`/ebd`} class="flex gap-2">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
         <path fill-rule="evenodd" d="M9.53 2.47a.75.75 0 0 1 0 1.06L4.81 8.25H15a6.75 6.75 0 0 1 0 13.5h-3a.75.75 0 0 1 0-1.5h3a5.25 5.25 0 1 0 0-10.5H4.81l4.72 4.72a.75.75 0 1 1-1.06 1.06l-6-6a.75.75 0 0 1 0-1.06l6-6a.75.75 0 0 1 1.06 0Z" clip-rule="evenodd" />
@@ -14,66 +65,7 @@ console.log('ebd', ebd)
       Voltar
     </a>
     <h1 class="font-bold text-gray-700">Escola bíblica dominical</h1>
-    <form action="" class="flex flex-col gap-4">
-      <div class="flex flex-col gap-2">
-        <label for="name">Nome</label>
-        <input id="name" placeholder="jesus" class="border-b border-gray-600 p-4 focus:border-none"/>
-      </div>
-      <div class="flex flex-col gap-2">
-        <label for="email">E-mail</label>
-        <input id="email" type="email" placeholder="jesus@atos29.com" class="border-b border-gray-600 p-4 focus:border-none"/>
-      </div>
-      <div class="flex flex-col gap-2">
-        <label for="name">Telefone / WhatsApp</label>
-        <input id="name" placeholder="jesus" class="border-b border-gray-600 p-4 focus:border-none"/>
-      </div>
-      <div class="flex flex-col gap-2">
-        <h3>Qual curso você se interessou?</h3>
-        <div class="flex gap-2 items-center">
-          <input type="radio" checked={ebd == 'primeiros-atos'} name="curso" id="primeiros-atos" class="accent-primary-light">
-          <label for="primeiros-atos" class="text-sm">Primeiros Atos</label>
-        </div>
-        <div class="flex gap-2 items-center">
-          <input type="radio" checked={ebd == 'fundamentos'} name="curso" id="fundamentos" class="accent-primary-light">
-          <label for="fundamentos" class="text-sm">Fundamentos</label>
-        </div>
-        <div class="flex gap-2 items-center">
-          <input type="radio" checked={ebd == 'estudos-biblicos'} name="curso" id="estudobiblico" class="accent-primary-light">
-          <label for="estudobiblico" class="text-sm">Estudo bíblico</label>
-        </div>
-        <div class="flex gap-2 items-center">
-          <input type="radio" checked={ebd == 'conhecendo-deus-e-fazendo-sua-vontede'} name="curso" id="cdfsv" class="accent-primary-light">
-          <label for="cdfsv" class="text-sm">Conhecendo Deus e fazendo sua vontade</label>
-        </div>
-        <div class="flex gap-2 items-center">
-          <input type="radio" checked={ebd == 'telos'} name="curso" id="telos" class="accent-primary-light">
-          <label for="telos" class="text-sm">Telos</label>
-        </div>
-      </div>
-      <div class="flex flex-col gap-2">
-        <h3>Quais cursos você já participou?</h3>
-        <div class="flex gap-2 items-center">
-          <input type="checkbox" name="primeiros atos jp " id="primeiros-atos-jp" class="accent-primary-light">
-          <label for="primeiros-atos-jp" class="text-sm">Primeiros Atos</label>
-        </div>
-        <div class="flex gap-2 items-center">
-          <input type="checkbox" name="fundamentos jp" id="fundamentos-jp" class="accent-primary-light">
-          <label for="fundamentos-jp" class="text-sm">Fundamentos</label>
-        </div>
-        <div class="flex gap-2 items-center">
-          <input type="checkbox" name="estudo biblico jp" id="estudobiblico-jp" class="accent-primary-light">
-          <label for="estudobiblico-jp" class="text-sm">Estudo bíblico</label>
-        </div>
-        <div class="flex gap-2 items-center">
-          <input type="checkbox" name="conhecendo Deus e fazendo sua vontade jp" id="cdfsv-jp" class="accent-primary-light">
-          <label for="cdfsv-jp" class="text-sm">Conhecendo Deus e fazendo sua vontade</label>
-        </div>
-        <div class="flex gap-2 items-center">
-          <input type="checkbox" name="telos jp" id="telos-jp" class="accent-primary-light">
-          <label for="telos-jp" class="text-sm">Telos</label>
-        </div>
-      </div>
-      <button type="submit" class="bg-secondary-blue h-12 w-full flex items-center justify-center rounded-md text-white font-medium">Enviar</button>
-    </form>
+    <FormIntentionToEnroll client:load selectedClassName={selectedClass}/>
+   
   </div>
 </Layout>
