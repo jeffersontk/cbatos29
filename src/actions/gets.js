@@ -13,3 +13,12 @@ export async function getHomeOffer(){
     const offer = await sanityClient.fetch(`*[_type == "offer"][0]`);
     return offer
 }
+export async function getCells(search) {
+    let queryString = `*[_type == "cells"]`;
+    if (search) {
+        queryString = `*[_type == "cells" && (title match "*${search}*" || leader1.name match "*${search}*" || leader2.name match "*${search}*")]`;
+
+    }
+    const cells = await sanityClient.fetch(queryString);
+    return cells;
+}
