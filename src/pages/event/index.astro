@@ -24,10 +24,10 @@ const formatDate = (dateString:string) => {
 
 <Layout title="CB Atos 29">
 	<section class="w-full max-w-[1280px] flex flex-col gap-4 items-center xl:px-0">
-		<div>
-			<img src={urlForImage(mainImage.asset._ref).url()} alt="Vem pra celula" class="object-fill max-h-[414px] mb-4">
+		<div class="w-full">
+			<img src={urlForImage(mainImage.asset._ref).url()} alt="Vem pra celula" class="object-fill w-full max-h-[414px] mb-4">
 		</div>
-		<ul class="px-8 xl:px-0 w-full grid grid-cols-2 xl:grid-cols-4 gap-8">
+		<ul class="px-8 xl:px-0 w-full grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
 			{events.map((event: any ) => (
 				<a href={`/event/${event._id}`}>
 					<li  class="relative rounded-md">
@@ -42,7 +42,10 @@ const formatDate = (dateString:string) => {
 								{formatDate(event.datinha).year}
 							</span>
 						</div>
-						<img src={urlForImage(event.mainImage.asset._ref).url()} alt="" class="w-full max-h-40 object-fill rounded-md shadow-md" />
+						<img 
+						src={urlForImage(event.mainImage.asset._ref).url()} 
+						alt="" 
+						class="w-full max-h-48 object-fill rounded-md shadow-md" />
 					</li>
 				</a>
 			))}
