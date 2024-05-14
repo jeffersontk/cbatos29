@@ -10,15 +10,16 @@ console.log('ebdPage',ebdPage.mainImage.asset)
 ---
 
 <Layout title="EBD Atos 29">
-	<section class="w-full max-w-[1280px] flex flex-col xl:grid xl:grid-cols-2 xl:grid-rows-2 gap-4 items-center">
+	<section class="w-full max-w-[1280px] flex flex-col gap-4 items-center">
 		<div>
 			<img src={urlForImage(ebdPage.mainImage.asset._ref).url()} alt="Vem pra celula" class="object-fill max-h-[414px]">
 		</div>
-		
-		<ul class="flex flex-col gap-4 px-8">
+		<div class="w-full flex items-center justify-center">
 			<h1 class="text-primary-light font-bold text-2xl">{ebdPage.title}</h1>
+		</div>
+		<ul class="w-full flex flex-col xl:grid xl:grid-cols-3 xl:grid-rows-2 gap-4 px-8 xl:px-0">
 			{ebd.map((ebd: any) => (
-				<li class="shadow-lg max-w-96 rounded-md py-4 flex flex-col gap-4">
+				<li class="shadow-md  w-full rounded-md py-4 flex flex-col gap-4 border border-gray-100">
 					<div class="flex justify-end">
 						<h2 class="bg-secondary-blue w-3/4 h-14 flex items-center px-8 rounded-tl-full rounded-bl-full text-white">
 							{ebd.title}

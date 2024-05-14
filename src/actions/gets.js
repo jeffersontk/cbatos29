@@ -13,6 +13,15 @@ export async function getHomeOffer(){
     const offer = await sanityClient.fetch(`*[_type == "offer"][0]`);
     return offer
 }
+export async function getEventsPage(){
+    const eventsPage = await sanityClient.fetch(`*[_type == "eventsPage"][0]`);
+    return eventsPage
+}
+export async function getEvents(){
+    const events = await sanityClient.fetch(`*[_type == "events"]`);
+    return events
+}
+
 export async function getCells(search) {
     let queryString = `*[_type == "cells"]`;
     if (search) {
