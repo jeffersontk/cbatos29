@@ -27,7 +27,7 @@ const formatDate = (dateString:string) => {
 		<div>
 			<img src={urlForImage(mainImage.asset._ref).url()} alt="Vem pra celula" class="object-fill max-h-[414px] mb-4">
 		</div>
-		<ul class="px-8 w-full">
+		<ul class="px-8 xl:px-0 w-full grid grid-cols-2 xl:grid-cols-4 gap-8">
 			{events.map((event: any ) => (
 				<a href={`/event/${event._id}`}>
 					<li  class="relative rounded-md">
