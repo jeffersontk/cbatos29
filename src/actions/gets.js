@@ -22,6 +22,12 @@ export async function getEvents(){
     return events
 }
 
+export async function getEventbyId(eventId) {
+    const query = `*[_type == "events" && _id == $eventId][0]`;
+    const params = { eventId };
+    const events = await sanityClient.fetch(query, params);
+    return events;
+}
 export async function getCells(search) {
     let queryString = `*[_type == "cells"]`;
     if (search) {

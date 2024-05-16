@@ -1,12 +1,84 @@
 ---
+import { getEventbyId } from '../../../actions/gets';
 import Layout from '../../../layouts/Layout.astro';
+import { urlForImage } from '../../../lib/urlForImage';
+import {GoogleMapsIframe} from '../../../components/GoogleMapsIframe';
 
 const {event} = Astro.params;
+
+const ev = await getEventbyId(event)
+
+const {title, subtitle, mapsIframe, datinha, time, description, mainImage} = ev
+
 ---
 
 <Layout title="CB Atos 29">
-  <div class="flex flex-col gap-4">
-    <h1 class="font-bold">{event}</h1>
-    <a href={`/event`}>Voltar</a>
-  </div>
+  <section class="w-full max-w-[1280px] flex flex-col gap-4 items-center xl:px-0">
+    <div class="w-full">
+			<img src={urlForImage(mainImage.asset._ref).url()} alt="Vem pra celula" class="object-fill w-full max-h-[414px] ">
+		</div>
+    <div class="w-full flex flex-col gap-4">
+      <div class="flex flex-col xl:px-0 px-8">
+        <h1 class="font-bold text-3xl text-secondary-blue">{title}</h1>
+        <div class="flex items-center">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-primary-light">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z" />
+          </svg>
+          <h3 class="text-primary-light font-semibold text-xl">{subtitle}</h3>
+        </div>
+      </div>
+      <div class="flex gap-4 w-full overflow-auto pl-8 xl:pl-0 pb-4">
+        <div class="w-full min-w-[280px] shadow-md p-4 rounded-md border border-gray-100">
+          <div class="w-full flex flex-col gap-2 lg:gap-4 items-center justify-center">
+            <h1 class="font-bold text-secondary-blue">A partir de 11 anos</h1>
+            <div class="flex gap-2">
+              <h2 class="text-8xl font-extrabold text-primary-light">89</h2>
+              <div class="flex flex-col text-primary-light">
+                <span class="text-3xl font-semibold">,90</span>
+                <span>Ate o dia <br/> 21 de Abril</span>
+              </div>
+            </div>
+            <div class="flex items-center text-gray-500">
+              <div class="flex">
+                <h3>97</h3>
+                <h3 class="text-xs">,90</h3>
+              </div>
+              <h3 class="text-sm">Após período promocional</h3>
+            </div>
+            <button class="bg-gradient-to-r from-primary-light to-primary-dark w-full h-12 flex items-center justify-center
+            text-white font-bold rounded-full
+            ">Garantir agora</button>
+          </div>
+        </div>
+        <div class="w-full  min-w-[280px] shadow-md p-4 rounded-md border border-gray-100">
+          <div class="w-full flex flex-col gap-2 lg:gap-4 items-center justify-center">
+            <h1 class="font-bold text-secondary-blue">De 06 anos a 11 anos</h1>
+            <div class="flex gap-2">
+              <h2 class="text-8xl font-extrabold text-primary-light">49</h2>
+              <div class="flex flex-col text-primary-light">
+                <span class="text-3xl font-semibold">,90</span>
+                <span>Ate o dia <br/> 21 de Abril</span>
+              </div>
+            </div>
+            <div class="flex items-center text-gray-500">
+              <div class="flex">
+                <h3>67</h3>
+                <h3 class="text-xs">,90</h3>
+              </div>
+              <h3 class="text-sm">Após período promocional</h3>
+            </div>
+            <button class="bg-gradient-to-r from-primary-light to-primary-dark w-full h-12 flex items-center justify-center
+            text-white font-bold rounded-full
+            ">Garantir agora</button>
+          </div>
+        </div>
+  
+      </div>
+      <div class="xl:px-0 px-8 flex flex-col gap-4">
+        <p>{description}</p>
+        <GoogleMapsIframe iframe={mapsIframe} />
+      </div>
+    </div>
+  </section>
 </Layout>
