@@ -1,31 +1,40 @@
 ---
 import { getWeHistory } from '../../actions/gets'
+import CarouselPlayer from '../../components/CarouselPlayer'
 import Layout from '../../layouts/Layout.astro'
-import { Iframe } from '../../components/iframe'
+
 import { urlForImage } from '../../lib/urlForImage'
 
 const weHistory = await getWeHistory()
-console.log(weHistory)
 const { title, subtitle, description, mainImage, playlist } = weHistory
+console.log('playlist', playlist)
 ---
 
-<Layout title="Equipe pastoral - CB Atos 29">
-  <div class="w-full flex items-center justify-center pt-8">
+<Layout title="Nossa Historia - CB Atos 29">
+  <div class="w-full flex items-center justify-center">
     <div class="max-w-[1280px] w-full">
-      <section class="w-full px-8">
-        <h1>{title}</h1>
-        <h1>{subtitle}</h1>
-        <h1>{description}</h1>
-        <img
-          src={urlForImage(mainImage.asset._ref).url()}
-          alt="Vem pra celula"
-          class="object-fill w-full max-h-[414px]"
-        />
-        {
-          playlist.map((play: any) => {
-            return <Iframe iframe={play.iframe} />
-          })
-        }
+      <img
+        src={urlForImage(mainImage.asset._ref).url()}
+        alt="Vem pra celula"
+        class="object-fill w-full max-h-[414px]"
+      />
+      <div
+        class="w-full text-white bg-gradient-to-r from-primary-light to-primary-dark p-4"
+      >
+        <h1 class="text-2xl font-bold">{title}</h1>
+        <h2>{subtitle}</h2>
+      </div>
+      <section class="w-full p-8 lg:px-0">
+        <div class="flex flex-col justify-center items-center gap-8">
+          <p class="text-gray-700">{description}</p>
+          <div class="w-full">
+            {
+              playlist.length > 0 && (
+                <CarouselPlayer client:load playlist={playlist} />
+              )
+            }
+          </div>
+        </div>
       </section>
     </div>
   </div>

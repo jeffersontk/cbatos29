@@ -41,8 +41,8 @@ export default defineType({
             type: 'string',
           },
           {
-            name: 'iframe',
-            title: 'iframe do video',
+            name: 'url',
+            title: 'url do video',
             type: 'string',
           },
         ],
