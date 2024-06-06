@@ -9,7 +9,7 @@ const ebdPage = await sanityClient.fetch(`*[_type == "ebdPage" ][0]`);
 console.log('ebdPage',ebdPage.mainImage.asset)
 ---
 
-<Layout title="EBD Atos 29">
+<Layout title="EBD - CB Atos 29">
 	<section class="w-full max-w-[1280px] flex flex-col gap-4 items-center">
 		<div class="w-full">
 			<img src={urlForImage(ebdPage.mainImage.asset._ref).url()} alt="Vem pra celula" class="object-fill w-full max-h-[414px]">

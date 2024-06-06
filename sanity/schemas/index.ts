@@ -8,6 +8,7 @@ import eventsPage from './eventsPage'
 import carousel from './carousel '
 import homeCelula from './homeCelula'
 import offer from './offer'
+import weHistory from './weHistory'
 
 export const schemaTypes = [
     ebd, 
@@ -19,5 +20,6 @@ export const schemaTypes = [
     eventsPage, 
     carousel, 
     homeCelula, 
-    offer
+    offer,
+    weHistory
 ]

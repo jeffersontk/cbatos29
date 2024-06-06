@@ -1,0 +1,32 @@
+---
+import { getWeHistory } from '../../actions/gets'
+import Layout from '../../layouts/Layout.astro'
+import { Iframe } from '../../components/iframe'
+import { urlForImage } from '../../lib/urlForImage'
+
+const weHistory = await getWeHistory()
+console.log(weHistory)
+const { title, subtitle, description, mainImage, playlist } = weHistory
+---
+
+<Layout title="Equipe pastoral - CB Atos 29">
+  <div class="w-full flex items-center justify-center pt-8">
+    <div class="max-w-[1280px] w-full">
+      <section class="w-full px-8">
+        <h1>{title}</h1>
+        <h1>{subtitle}</h1>
+        <h1>{description}</h1>
+        <img
+          src={urlForImage(mainImage.asset._ref).url()}
+          alt="Vem pra celula"
+          class="object-fill w-full max-h-[414px]"
+        />
+        {
+          playlist.map((play: any) => {
+            return <Iframe iframe={play.iframe} />
+          })
+        }
+      </section>
+    </div>
+  </div>
+</Layout>
