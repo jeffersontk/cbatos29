@@ -1,19 +1,19 @@
-import {defineField, defineType} from 'sanity'
+import { defineField, defineType } from "sanity"
 
 export default defineType({
-  name: 'ebdPage',
-  title: 'EBD Pagina',
-  type: 'document',
+  name: "ebdPage",
+  title: "EBD Pagina",
+  type: "document",
   fields: [
     defineField({
-      name: 'title',
-      title: 'Title',
-      type: 'string',
+      name: "title",
+      title: "Title",
+      type: "string",
     }),
     defineField({
-      name: 'mainImage',
-      title: 'Main image',
-      type: 'image',
+      name: "mainImage",
+      title: "Main image",
+      type: "image",
       options: {
         hotspot: true,
       },

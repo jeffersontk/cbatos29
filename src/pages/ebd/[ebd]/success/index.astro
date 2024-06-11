@@ -1,28 +1,36 @@
 ---
-import { Image } from 'astro:assets';
-import Layout from '../../../../layouts/Layout.astro';
+import { Image } from "astro:assets"
+import Layout from "../../../../layouts/Layout.astro"
 
-const {ebd} = Astro.params;
+const { ebd } = Astro.params
 ---
 
 <Layout title="EBD - CB Atos 29">
   <div class="flex flex-col gap-4 px-8 h-[58vh] justify-center">
-    <h1 class="font-bold text-2xl text-secondary-blue">Sua inscrição foi realizada com sucesso </h1>
-    <p>Entraremos em contato em breve para confirmação da inscrição, nos vemos lá!</p>
+    <h1 class="font-bold text-2xl text-secondary-blue">
+      Sua inscrição foi realizada com sucesso
+    </h1>
+    <p>
+      Entraremos em contato em breve para confirmação da inscrição, nos vemos
+      lá!
+    </p>
     <div class="flex items-center">
       <div class="flex flex-col text-3xl font-black text-primary-light">
         <h1>ESCOLA</h1>
         <h1>BÍBLICA</h1>
         <h1>DOMINICAL</h1>
       </div>
-      <Image 
-        src="/EBD-Domingo-9h30.png" 
-        alt="ebd domingo 9h30" 
+      <Image
+        src="/EBD-Domingo-9h30.png"
+        alt="ebd domingo 9h30"
         class="ml-[-30px]"
         width="162"
         height="138"
+      />
+      <a
+        class="bg-primary-light text-white flex items-center justify-center py-2 rounded-md"
+        href={`/`}>Voltar ao Inicio</a
       >
     </div>
-    <a class="bg-primary-light text-white flex items-center justify-center py-2 rounded-md" href={`/`}>Voltar ao Inicio</a>
-  </div>  
-</Layout>
+  </div></Layout
+>

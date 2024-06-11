@@ -1,21 +1,38 @@
 ---
-import Layout from "../../layouts/Layout.astro";
-
+import { getPastoralTeam } from "../../actions/gets"
+import Layout from "../../layouts/Layout.astro"
+import { urlForImage } from "../../lib/urlForImage"
+const pastoralTeam = await getPastoralTeam()
+const { title, team, Desciption } = pastoralTeam
 ---
 
 <Layout title="Equipe pastoral - CB Atos 29">
-    <div class="w-full flex items-center justify-center pt-8">
-        <div class="max-w-[1280px]">
-            <h1>Equipe pastoral</h1>
-            <div class="grid grid-cols-1 lg:grid-cols-2">
-                <dir>
-                    <h1>Deivison Bahia</h1>
-                </dir>
-                
-                <dir>
-                    <h1>Luange Bahia</h1>
-                </dir>
-            </div>
-        </div>  
+  <div class="w-full flex items-center justify-center pt-8">
+    <div class="max-w-[1280px] w-full min-h-[60vh] flex flex-col gap-8">
+      <div class="flex flex-col gap-2 px-8 sm:px-0">
+        <h1>{title}</h1>
+        <p>{Desciption}</p>
+      </div>
+      <div class="grid grid-cols-1 lg:grid-cols-2 px-8 sm:px-0">
+        {
+          team.map((member: any) => {
+            return (
+              <div class="shadow-lg rounded-md">
+                <img
+                  src={urlForImage(member.mainImage.asset._ref).url()}
+                  alt="Vem pra celula"
+                  class="object-cover w-full max-h-[500px]"
+                />
+                <div class="flex flex-col gap-2 p-4">
+                  <h2>{member.nome}</h2>
+                  <h2>"{member.favoriteVerse}"</h2>
+                  <p>{member.Desciption}</p>
+                </div>
+              </div>
+            )
+          })
+        }
+      </div>
     </div>
+  </div>
 </Layout>

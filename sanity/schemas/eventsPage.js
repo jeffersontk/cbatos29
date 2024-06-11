@@ -1,19 +1,19 @@
-import {defineField, defineType} from 'sanity'
+import { defineField, defineType } from "sanity"
 
 export default defineType({
-  name: 'eventsPage',
-  title: 'Pagina Eventos',
-  type: 'document',
+  name: "eventsPage",
+  title: "Pagina Eventos",
+  type: "document",
   fields: [
     defineField({
-      name: 'title',
-      title: 'Title',
-      type: 'string',
+      name: "title",
+      title: "Title",
+      type: "string",
     }),
     defineField({
-      name: 'mainImage',
-      title: 'Image Principal',
-      type: 'image',
+      name: "mainImage",
+      title: "Image Principal",
+      type: "image",
       options: {
         hotspot: true,
       },

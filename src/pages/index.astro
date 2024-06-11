@@ -1,52 +1,63 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import { Carousel } from '../components/Carousel';
-import {Offer} from '../components/Offer';
-import { Image } from 'astro:assets';
-import { urlForImage } from "../lib/urlForImage";
-import { getCarouselImages, getHomeCelula, getHomeOffer } from '../actions/gets';
+import Layout from "../layouts/Layout.astro"
+import { Carousel } from "../components/Carousel"
+import { Offer } from "../components/Offer"
+import { Image } from "astro:assets"
+import { urlForImage } from "../lib/urlForImage"
+import { getCarouselImages, getHomeCelula, getHomeOffer } from "../actions/gets"
 
-const carousel = await getCarouselImages();
-const homeCelula = await getHomeCelula();
-const offer = await getHomeOffer();
+const carousel = await getCarouselImages()
+const homeCelula = await getHomeCelula()
+const offer = await getHomeOffer()
 const carouselAssets = carousel.images
 
-const {title, celulaImage} = homeCelula
-
+const { title, celulaImage } = homeCelula
 ---
 
 <Layout title="CB Atos 29">
-	<section class="w-full flex flex-col gap-4 items-center xl:px-0">
-		<div class="w-full max-w-[1280px]">
-			<Carousel client:load images={carouselAssets}/ >
-		</div>
-		<div class="w-full max-w-[1280px] px-4 flex flex-col justify-center items-center">
-			<div class="flex items-center">
-				<div class="flex flex-col text-3xl font-black text-primary-light">
-					<h1>ESCOLA</h1>
-					<h1>BÍBLICA</h1>
-					<h1>DOMINICAL</h1>
-				</div>
-				<Image 
-					src="/EBD-Domingo-9h30.png" 
-					alt="ebd domingo 9h30" 
-					class="ml-[-30px]"
-					width="162"
-					height="138"
-				>
-			</div>
-			<a href="/ebd" class="h-12 w-full max-w-96 rounded-full bg-primary-light text-white font-bold text-base flex justify-center items-center">Faça sua inscrição</a>
-		</div>
-		<div class="w-full h-full p-8 flex flex-col items-center bg-secondary-blue">
-			<a href="/celula" class="cursor-pointer text-center">
-				<div>
-					<img src={urlForImage(celulaImage.asset._ref).url()} alt="Vem pra celula" class="object-fill max-h-[414px] mb-4">
-				</div>
-				<h3 class="text-white font-bold text-base">{title}</h3>
-			</a>
-		</div>
-		<div class="px-8">
-			<Offer client:load offer={offer}/>
-		</div>
-	</section>	
-</Layout>
+  <section class="w-full flex flex-col gap-4 items-center xl:px-0">
+    <div class="w-full max-w-[1280px]">
+      <Carousel client:load images={carouselAssets} />
+      <div
+        class="w-full max-w-[1280px] px-4 flex flex-col justify-center items-center"
+      >
+        <div class="flex items-center">
+          <div class="flex flex-col text-3xl font-black text-primary-light">
+            <h1>ESCOLA</h1>
+            <h1>BÍBLICA</h1>
+            <h1>DOMINICAL</h1>
+          </div>
+          <Image
+            src="/EBD-Domingo-9h30.png"
+            alt="ebd domingo 9h30"
+            class="ml-[-30px]"
+            width="162"
+            height="138"
+          />
+          <a
+            href="/ebd"
+            class="h-12 w-full max-w-96 rounded-full bg-primary-light text-white font-bold text-base flex justify-center items-center"
+            >Faça sua inscrição</a
+          >
+        </div>
+        <div
+          class="w-full h-full p-8 flex flex-col items-center bg-secondary-blue"
+        >
+          <a href="/celula" class="cursor-pointer text-center">
+            <div>
+              <img
+                src={urlForImage(celulaImage.asset._ref).url()}
+                alt="Vem pra celula"
+                class="object-fill max-h-[414px] mb-4"
+              />
+            </div>
+            <h3 class="text-white font-bold text-base">{title}</h3>
+          </a>
+        </div>
+        <div class="px-8">
+          <Offer client:load offer={offer} />
+        </div>
+      </div>
+    </div>
+  </section></Layout
+>
