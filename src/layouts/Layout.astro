@@ -21,7 +21,8 @@ const { title } = Astro.props
   </head>
   <body>
     <Header />
-    <main class="w-full flex items-center justify-center">
+    <main class="w-full flex flex-col items-center justify-center">
+      <div class="h-16 w-full"></div>
       <slot />
     </main>
     <Footer />
