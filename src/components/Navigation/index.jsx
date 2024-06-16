@@ -1,11 +1,11 @@
-import { useState } from "react";
+import { useState } from "react"
 
 export const Navigation = ({ pathname }) => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false)
 
   const toggleMenu = () => {
-    setIsOpen(!isOpen);
-  };
+    setIsOpen(!isOpen)
+  }
 
   return (
     <div className="relative w-full">
@@ -106,7 +106,9 @@ export const Navigation = ({ pathname }) => {
             <a
               href="/ebd"
               className={`block text-base font-medium text-white hover:text-gray-300 ${
-                String(pathname).includes("/ebd") ? "border-b-2 border-white" : ""
+                String(pathname).includes("/ebd")
+                  ? "border-b-2 border-white"
+                  : ""
               }`}
             >
               EBD
@@ -147,5 +149,5 @@ export const Navigation = ({ pathname }) => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
