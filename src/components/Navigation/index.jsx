@@ -33,44 +33,44 @@ export const Navigation = ({ pathname }) => {
           <nav className="hidden lg:flex space-x-10">
             <a
               href="/"
-              className="text-base font-medium text-white hover:text-gray-300"
+              className="text-lg font-medium text-white hover:text-gray-300"
             >
               Início
             </a>
             <a
               href="/ebd"
-              className="text-base font-medium text-white hover:text-gray-300"
+              className="text-lg font-medium text-white hover:text-gray-300"
             >
               EBD
             </a>
             <a
               href="/cells"
-              className="text-base font-medium text-white hover:text-gray-300"
+              className="text-lg font-medium text-white hover:text-gray-300"
             >
               Células
             </a>
             <a
               href="/event"
-              className="text-base font-medium text-white hover:text-gray-300"
+              className="text-lg font-medium text-white hover:text-gray-300"
             >
               Eventos
             </a>
             <a
               href="/pastoral-team"
-              className="text-base font-medium text-white hover:text-gray-300"
+              className="text-lg font-medium text-white hover:text-gray-300"
             >
               Equipe Pastoral
             </a>
             <a
               href="/history"
-              className="text-base font-medium text-white hover:text-gray-300"
+              className="text-lg font-medium text-white hover:text-gray-300"
             >
               Nossa História
             </a>
           </nav>
         </div>
       </div>
-      <div className="absolute right-0 top-0 w-full">
+      <div className="absolute right-0 top-0 w-full max-w-64">
         <div
           className={`${
             isOpen
@@ -97,7 +97,7 @@ export const Navigation = ({ pathname }) => {
           <div className="flex flex-col gap-4 mt-4">
             <a
               href="/"
-              className={`block text-base font-medium text-white hover:text-gray-300 ${
+              className={`block text-lg font-medium text-white hover:text-gray-300 ${
                 pathname === "/" ? "border-b-2 border-white" : ""
               }`}
             >
@@ -105,7 +105,7 @@ export const Navigation = ({ pathname }) => {
             </a>
             <a
               href="/ebd"
-              className={`block text-base font-medium text-white hover:text-gray-300 ${
+              className={`block text-lg font-medium text-white hover:text-gray-300 ${
                 String(pathname).includes("/ebd")
                   ? "border-b-2 border-white"
                   : ""
@@ -115,7 +115,7 @@ export const Navigation = ({ pathname }) => {
             </a>
             <a
               href="/cells"
-              className={`block text-base font-medium text-white hover:text-gray-300 ${
+              className={`block text-lg font-medium text-white hover:text-gray-300 ${
                 pathname === "/cells" ? "border-b-2 border-white" : ""
               }`}
             >
@@ -123,7 +123,7 @@ export const Navigation = ({ pathname }) => {
             </a>
             <a
               href="/event"
-              className={`block text-base font-medium text-white hover:text-gray-300 ${
+              className={`block text-lg font-medium text-white hover:text-gray-300 ${
                 pathname === "/event" ? "border-b-2 border-white" : ""
               }`}
             >
@@ -131,7 +131,7 @@ export const Navigation = ({ pathname }) => {
             </a>
             <a
               href="/pastoral-team"
-              className={`block text-base font-medium text-white hover:text-gray-300 ${
+              className={`block text-lg font-medium text-white hover:text-gray-300 ${
                 pathname === "/pastoral-team" ? "border-b-2 border-white" : ""
               }`}
             >
@@ -139,7 +139,7 @@ export const Navigation = ({ pathname }) => {
             </a>
             <a
               href="/history"
-              className={`block text-base font-medium text-white hover:text-gray-300 ${
+              className={`block text-lg font-medium text-white hover:text-gray-300 ${
                 pathname === "/history" ? "border-b-2 border-white" : ""
               }`}
             >
