@@ -76,7 +76,7 @@ export const Navigation = ({ pathname }) => {
             isOpen
               ? "bg-primary-dark h-screen w-full px-4 py-2 transform translate-all duration-500"
               : "hidden"
-          } md:hidden`}
+          }`}
         >
           <header className="flex justify-end">
             <button onClick={toggleMenu}>
