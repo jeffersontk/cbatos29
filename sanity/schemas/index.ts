@@ -10,6 +10,8 @@ import homeCelula from "./homeCelula"
 import offer from "./offer"
 import weHistory from "./weHistory"
 import pastoralTeam from "./pastoralTeam"
+import ministry from "./ministry"
+import testimony from "./testimony"
 
 export const schemaTypes = [
   ebd,
@@ -24,4 +26,6 @@ export const schemaTypes = [
   offer,
   weHistory,
   pastoralTeam,
+  ministry,
+  testimony
 ]

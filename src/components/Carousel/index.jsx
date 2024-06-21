@@ -1,16 +1,15 @@
-import { Image } from "astro:assets"
-import React, { useState, useEffect, useRef } from "react"
-import { urlForImage } from "../../lib/urlForImage"
+// eslint-disable-next-line no-unused-vars
+import { useState, useEffect } from "react"
 
-export const Carousel = ({ images }) => {
+export const Carousel = ({ children, items, circuleButton = false, arrowButton = false, hasPedding = false }) => {
   const [currentImage, setCurrentImage] = useState(0)
 
   const nextImage = () => {
-    setCurrentImage((prev) => (prev === images.length - 1 ? 0 : prev + 1))
+    setCurrentImage((prev) => (prev === items.length - 1 ? 0 : prev + 1))
   }
 
   const prevImage = () => {
-    setCurrentImage((prev) => (prev === 0 ? images.length - 1 : prev - 1))
+    setCurrentImage((prev) => (prev === 0 ? items.length - 1 : prev - 1))
   }
 
   useEffect(() => {
@@ -23,7 +22,7 @@ export const Carousel = ({ images }) => {
 
   return (
     <div className="relative">
-      <div className="overflow-hidden w-full max-h-[488px] md:h-[488px]">
+      <div className="overflow-hidden w-full max-h-[488px]">
         <div
           className="flex max-h-[488px]"
           style={{
@@ -31,18 +30,13 @@ export const Carousel = ({ images }) => {
             transition: "transform 0.5s ease",
           }}
         >
-          {images.map((image) => (
-            <img
-              key={image._key}
-              src={urlForImage(image.asset._ref)}
-              alt={`Imagem ${image.asset._ref}`}
-              className="image w-full"
-            />
-          ))}
+          {children && children}
         </div>
       </div>
-      <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex gap-4">
-        {images.map((_, index) => (
+      {
+        circuleButton &&
+         <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex gap-4">
+        {items.map((_, index) => (
           <button
             key={_._key}
             onClick={() => setCurrentImage(index)}
@@ -53,41 +47,47 @@ export const Carousel = ({ images }) => {
             } focus:outline-none`}
           ></button>
         ))}
-      </div>
-      <button
-        onClick={prevImage}
-        className="absolute top-1/2 left-4 transform -translate-y-1/2 h-full px-3 py-1 rounded-md text-white text-sm focus:outline-none"
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 24 24"
-          fill="currentColor"
-          className="w-10 h-10 opacity-75 "
+        </div>
+      }
+      {
+        arrowButton && 
+ <>
+        <button
+          onClick={prevImage}
+          className="absolute top-1/2 left-4 transform -translate-y-1/2 h-full px-3 py-1 rounded-md text-white text-sm focus:outline-none"
         >
-          <path
-            fillRule="evenodd"
-            d="M7.72 12.53a.75.75 0 0 1 0-1.06l7.5-7.5a.75.75 0 1 1 1.06 1.06L9.31 12l6.97 6.97a.75.75 0 1 1-1.06 1.06l-7.5-7.5Z"
-            clipRule="evenodd"
-          />
-        </svg>
-      </button>
-      <button
-        onClick={nextImage}
-        className="absolute top-1/2 right-4 transform -translate-y-1/2 h-full px-3 py-1 rounded-md text-white text-sm focus:outline-none"
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 24 24"
-          fill="currentColor"
-          className="w-10 h-10 opacity-75 "
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+            className="w-10 h-10 opacity-75 "
+          >
+            <path
+              fillRule="evenodd"
+              d="M7.72 12.53a.75.75 0 0 1 0-1.06l7.5-7.5a.75.75 0 1 1 1.06 1.06L9.31 12l6.97 6.97a.75.75 0 1 1-1.06 1.06l-7.5-7.5Z"
+              clipRule="evenodd"
+            />
+          </svg>
+        </button>
+        <button
+          onClick={nextImage}
+          className="absolute top-1/2 right-4 transform -translate-y-1/2 h-full px-3 py-1 rounded-md text-white text-sm focus:outline-none"
         >
-          <path
-            fillRule="evenodd"
-            d="M16.28 11.47a.75.75 0 0 1 0 1.06l-7.5 7.5a.75.75 0 0 1-1.06-1.06L14.69 12 7.72 5.03a.75.75 0 0 1 1.06-1.06l7.5 7.5Z"
-            clipRule="evenodd"
-          />
-        </svg>
-      </button>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+            className="w-10 h-10 opacity-75 "
+          >
+            <path
+              fillRule="evenodd"
+              d="M16.28 11.47a.75.75 0 0 1 0 1.06l-7.5 7.5a.75.75 0 0 1-1.06-1.06L14.69 12 7.72 5.03a.75.75 0 0 1 1.06-1.06l7.5 7.5Z"
+              clipRule="evenodd"
+            />
+          </svg>
+        </button>
+ </>
+      }
     </div>
   )
 }
