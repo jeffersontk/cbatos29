@@ -12,4 +12,3 @@ export const QuoteRight = (props) => (
     />
   </svg>
 )
-

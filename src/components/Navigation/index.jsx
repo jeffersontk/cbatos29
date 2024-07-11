@@ -62,6 +62,12 @@ export const Navigation = ({ pathname }) => {
               Equipe Pastoral
             </a>
             <a
+              href="/ministry"
+              className="text-lg font-medium text-white hover:text-gray-300"
+            >
+              Ministerios
+            </a>
+            <a
               href="/history"
               className="text-lg font-medium text-white hover:text-gray-300"
             >
@@ -136,6 +142,14 @@ export const Navigation = ({ pathname }) => {
               }`}
             >
               Equipe Pastoral
+            </a>
+            <a
+              href="/ministry"
+              className={`block text-lg font-medium text-white hover:text-gray-300 ${
+                pathname === "/ministry" ? "border-b-2 border-white" : ""
+              }`}
+            >
+              Ministerios
             </a>
             <a
               href="/history"

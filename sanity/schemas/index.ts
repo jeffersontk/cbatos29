@@ -27,5 +27,5 @@ export const schemaTypes = [
   weHistory,
   pastoralTeam,
   ministry,
-  testimony
+  testimony,
 ]

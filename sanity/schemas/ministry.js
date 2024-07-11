@@ -6,8 +6,8 @@ export default defineType({
   type: "document",
   fields: [
     defineField({
-      name: "name",
-      title: "Nome",
+      name: "title",
+      title: "Titulo",
       type: "string",
     }),
     defineField({
@@ -17,16 +17,46 @@ export default defineType({
     }),
     defineField({
       name: "mainImage",
-      title: "logo",
+      title: "Imagem principal",
       type: "image",
       options: {
         hotspot: true,
       },
     }),
     defineField({
-      name: "contact",
-      title: "contato",
-      type: "string",
+      name: "team",
+      title: "equipe",
+      type: "array",
+      of: [
+        {
+          type: "object",
+          fields: [
+            {
+              name: "name",
+              title: "Nome",
+              type: "string",
+            },
+            {
+              name: "Desciption",
+              title: "Descrição",
+              type: "text",
+            },
+            {
+              name: "contact",
+              title: "Contato",
+              type: "string",
+            },
+            {
+              name: "mainImage",
+              title: "Image principal",
+              type: "image",
+              options: {
+                hotspot: true,
+              },
+            },
+          ],
+        },
+      ],
     }),
-  ]
+  ],
 })

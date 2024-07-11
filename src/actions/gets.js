@@ -52,12 +52,13 @@ export async function getPastoralTeam() {
   const pastoralTeam = await sanityClient.fetch(`*[_type == "pastoralTeam"][0]`)
   return pastoralTeam
 }
+
 export async function getMinistry() {
-  const pastoralTeam = await sanityClient.fetch(`*[_type == "ministry"]`)
+  const pastoralTeam = await sanityClient.fetch(`*[_type == "ministry"][0]`)
   return pastoralTeam
 }
+
 export async function getTestimony() {
   const pastoralTeam = await sanityClient.fetch(`*[_type == "testimony"]`)
   return pastoralTeam
 }
-
