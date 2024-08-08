@@ -29,5 +29,5 @@ export const schemaTypes = [
   pastoralTeam,
   ministry,
   testimony,
-  userTeam
+  userTeam,
 ]
