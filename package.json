@@ -26,6 +26,7 @@
     "@types/react": "^18.2.53",
     "@types/react-dom": "^18.2.18",
     "astro": "^4.3.2",
+    "bcryptjs": "^2.4.3",
     "groq": "^3.30.0",
     "html-react-parser": "^5.1.10",
     "react": "^18.2.0",
@@ -40,6 +41,7 @@
   "devDependencies": {
     "@portabletext/types": "2.0.7",
     "@sanity/types": "3.17.0",
+    "@types/bcryptjs": "^2.4.6",
     "@types/react-input-mask": "^3.0.5",
     "eslint": "8.50.0",
     "eslint-config-prettier": "^9.1.0",

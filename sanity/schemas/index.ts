@@ -12,6 +12,7 @@ import weHistory from "./weHistory"
 import pastoralTeam from "./pastoralTeam"
 import ministry from "./ministry"
 import testimony from "./testimony"
+import userTeam from "./userTeam"
 
 export const schemaTypes = [
   ebd,
@@ -28,4 +29,5 @@ export const schemaTypes = [
   pastoralTeam,
   ministry,
   testimony,
+  userTeam
 ]

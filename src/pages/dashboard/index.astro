@@ -1,0 +1,19 @@
+---
+import Layout from "../../layouts/LayoutDashboard.astro"
+import LoginForm from "../../components/Dashboard/FormLogin"
+---
+
+<Layout title="EBD - CB Atos 29">
+  <section class="flex h-full w-full">
+    <img
+      src="/bg-dashboard-login.png"
+      alt=""
+      srcset=""
+      class="h-screen w-3/4"
+    />
+    <div class="w-1/4">
+      <LoginForm client:load />
+    </div>
+  </section>
+</Layout>
+  

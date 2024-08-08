@@ -23,7 +23,9 @@ export function Offer({ offer }) {
     <div className="bg-secondary-blue p-4 lg:p-8 rounded-md flex flex-col gap-4 w-full items-center justify-center">
       <h1 className="font-bold text-xl text-bage">{title}</h1>
       <div>
-        <p className="font-light text-sm lg:text-lg text-white">{description}</p>
+        <p className="font-light text-sm lg:text-lg text-white">
+          {description}
+        </p>
         <p className="font-thin text-xs lg:text-base text-white">{verse}</p>
       </div>
       <div className="flex flex-col gap-4 lg:gap-8 lg:flex-row">
@@ -62,7 +64,13 @@ export function Offer({ offer }) {
           className="flex lg:flex-col gap-2 items-center cursor-pointer"
           onClick={() => handleCopy(pix, setIsCopyPix)}
         >
-          <img src="/pix.png" alt="pix" className="h-5" width="63" height="28" />
+          <img
+            src="/pix.png"
+            alt="pix"
+            className="h-5"
+            width="63"
+            height="28"
+          />
           <div className="flex gap-4 items-end">
             <span className="font-medium text-sm lg:text-base text-white">
               {pix}
