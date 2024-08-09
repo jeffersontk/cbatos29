@@ -66,7 +66,7 @@ export default function AuthForm() {
   }
 
   if (isSubmitted) {
-    window.location.href = '/dashboard/painel';
+    window.location.href = "/dashboard/painel"
   }
 
   return (
@@ -78,7 +78,9 @@ export default function AuthForm() {
           className="flex flex-col gap-4 mt-8"
         >
           <div className="flex flex-col gap-2">
-            <label htmlFor="signupName" class="text-bage">Nome</label>
+            <label htmlFor="signupName" class="text-bage">
+              Nome
+            </label>
             <input
               {...signupRegister("name", { required: true })}
               placeholder="Seu nome"
@@ -91,7 +93,9 @@ export default function AuthForm() {
             )}
           </div>
           <div className="flex flex-col gap-2">
-            <label htmlFor="signupEmail" class="text-bage">E-mail</label>
+            <label htmlFor="signupEmail" class="text-bage">
+              E-mail
+            </label>
             <input
               {...signupRegister("email", {
                 required: true,
@@ -109,7 +113,9 @@ export default function AuthForm() {
             )}
           </div>
           <div className="flex flex-col gap-2">
-            <label htmlFor="signupPassword" class="text-bage">Senha</label>
+            <label htmlFor="signupPassword" class="text-bage">
+              Senha
+            </label>
             <input
               {...signupRegister("password", { required: true, minLength: 6 })}
               type="password"
@@ -124,8 +130,10 @@ export default function AuthForm() {
               </p>
             )}
           </div>
-          <div className="flex flex-col gap-2" >
-            <label htmlFor="confirmPassword" class="text-bage">Confirme a Senha</label>
+          <div className="flex flex-col gap-2">
+            <label htmlFor="confirmPassword" class="text-bage">
+              Confirme a Senha
+            </label>
             <input
               {...signupRegister("confirmPassword", { required: true })}
               type="password"
@@ -172,7 +180,9 @@ export default function AuthForm() {
           className="flex flex-col gap-4"
         >
           <div className="flex flex-col gap-2">
-            <label htmlFor="loginEmail" class="text-bage">E-mail</label>
+            <label htmlFor="loginEmail" class="text-bage">
+              E-mail
+            </label>
             <input
               {...loginRegister("email", {
                 required: true,
@@ -190,7 +200,9 @@ export default function AuthForm() {
             )}
           </div>
           <div className="flex flex-col gap-2">
-            <label htmlFor="loginPassword" class="text-bage">Senha</label>
+            <label htmlFor="loginPassword" class="text-bage">
+              Senha
+            </label>
             <input
               {...loginRegister("password", { required: true, minLength: 6 })}
               type="password"
