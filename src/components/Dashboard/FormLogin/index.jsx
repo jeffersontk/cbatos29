@@ -66,7 +66,7 @@ export default function AuthForm() {
   }
 
   if (isSubmitted) {
-    return <p>Operation successful!</p>
+    window.location.href = '/dashboard/painel';
   }
 
   return (
@@ -77,9 +77,8 @@ export default function AuthForm() {
           method="POST"
           className="flex flex-col gap-4 mt-8"
         >
-          <h2>Cadastro</h2>
           <div className="flex flex-col gap-2">
-            <label htmlFor="signupName">Nome</label>
+            <label htmlFor="signupName" class="text-bage">Nome</label>
             <input
               {...signupRegister("name", { required: true })}
               placeholder="Seu nome"
@@ -92,7 +91,7 @@ export default function AuthForm() {
             )}
           </div>
           <div className="flex flex-col gap-2">
-            <label htmlFor="signupEmail">E-mail</label>
+            <label htmlFor="signupEmail" class="text-bage">E-mail</label>
             <input
               {...signupRegister("email", {
                 required: true,
@@ -110,7 +109,7 @@ export default function AuthForm() {
             )}
           </div>
           <div className="flex flex-col gap-2">
-            <label htmlFor="signupPassword">Senha</label>
+            <label htmlFor="signupPassword" class="text-bage">Senha</label>
             <input
               {...signupRegister("password", { required: true, minLength: 6 })}
               type="password"
@@ -125,8 +124,8 @@ export default function AuthForm() {
               </p>
             )}
           </div>
-          <div className="flex flex-col gap-2">
-            <label htmlFor="confirmPassword">Confirme a Senha</label>
+          <div className="flex flex-col gap-2" >
+            <label htmlFor="confirmPassword" class="text-bage">Confirme a Senha</label>
             <input
               {...signupRegister("confirmPassword", { required: true })}
               type="password"
@@ -172,9 +171,8 @@ export default function AuthForm() {
           method="POST"
           className="flex flex-col gap-4"
         >
-          <h2>Login</h2>
           <div className="flex flex-col gap-2">
-            <label htmlFor="loginEmail">E-mail</label>
+            <label htmlFor="loginEmail" class="text-bage">E-mail</label>
             <input
               {...loginRegister("email", {
                 required: true,
@@ -192,7 +190,7 @@ export default function AuthForm() {
             )}
           </div>
           <div className="flex flex-col gap-2">
-            <label htmlFor="loginPassword">Senha</label>
+            <label htmlFor="loginPassword" class="text-bage">Senha</label>
             <input
               {...loginRegister("password", { required: true, minLength: 6 })}
               type="password"
@@ -215,7 +213,7 @@ export default function AuthForm() {
           <button
             type="submit"
             disabled={isLoading}
-            className="bg-secondary-blue h-12 w-full flex items-center justify-center rounded-md text-white font-medium"
+            className="bg-primary-light h-12 w-full flex items-center justify-center rounded-md text-white font-medium"
           >
             {isLoading ? (
               <div className="animate-spin">
@@ -235,7 +233,7 @@ export default function AuthForm() {
           </button>
         </form>
       )}
-      <button onClick={() => handleRegister()}>
+      <button onClick={() => handleRegister()} class="text-bage">
         {signUpVisible ? "Fazer login" : "Cadastrar"}
       </button>
     </div>
