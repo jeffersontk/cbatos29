@@ -24,6 +24,17 @@ export default {
       hidden: true,
     },
     {
+      name: "role",
+      title: "role",
+      type: "string",
+      options: {
+        list: [
+          { title: "admin", value: "admin" },
+          { title: "comun", value: "comun" },
+        ],
+      },
+    },
+    {
       name: "createdAt",
       title: "Created At",
       type: "datetime",

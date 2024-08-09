@@ -19,25 +19,32 @@ export async function signIn(formData) {
     const user = await sanityClient.fetch(query, params)
 
     if (!user) {
-      console.log("User not found.")
+      return {
+        success: false,
+        status: 404, // Não Encontrado
+        message: "User not found.",
+      }
     } else {
-      console.log("user", user)
       const passwordMatch = await bcrypt.compare(password, user.password)
       if (!passwordMatch) {
-        console.log("Invalid password.")
+        return {
+          success: false,
+          status: 401, // Autorizado
+          message: "Senha está incorreta",
+        }
       } else {
-        console.log(true)
         return {
           success: true,
           status: 200,
+          message: "Login successful.",
         }
       }
     }
   } catch (error) {
-    console.log("error: ", error)
     return {
       success: false,
       status: 500,
+      message: "An error occurred while signing up.",
     }
   }
 }

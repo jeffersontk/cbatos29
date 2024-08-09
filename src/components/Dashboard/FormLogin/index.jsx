@@ -18,7 +18,6 @@ export default function AuthForm() {
 
   const [signUpVisible, setSignUpVisible] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
-  const [isSubmitted, setIsSubmitted] = useState(false)
   const [loginError, setLoginError] = useState(null)
   const [signupError, setSignupError] = useState(null)
 
@@ -28,8 +27,12 @@ export default function AuthForm() {
 
     try {
       const response = await signIn(data)
-      console.log(response)
-      setIsSubmitted(true)
+      console.log("response", response)
+      if (response.status === 401) {
+        setLoginError("Email ou senha inválidos")
+      } else if (response.status === 200) {
+        window.location.href = "/dashboard/painel"
+      }
     } catch (error) {
       console.error("Error during authentication:", error)
       setLoginError("An error occurred. Please try again later.")
@@ -49,9 +52,8 @@ export default function AuthForm() {
     }
 
     try {
-      const response = await signUp(data)
-      console.log(response)
-      setIsSubmitted(true)
+      await signUp(data)
+      setSignUpVisible(false)
     } catch (error) {
       console.error("Error during signup:", error)
       setSignupError("An error occurred. Please try again later.")
@@ -61,12 +63,7 @@ export default function AuthForm() {
   }
 
   const handleRegister = () => {
-    console.log("handleRegister")
     setSignUpVisible(!signUpVisible)
-  }
-
-  if (isSubmitted) {
-    window.location.href = "/dashboard/painel"
   }
 
   return (
@@ -154,7 +151,7 @@ export default function AuthForm() {
           <button
             type="submit"
             disabled={isLoading}
-            className="bg-secondary-blue h-12 w-full flex items-center justify-center rounded-md text-white font-medium"
+            className="bg-primary-light h-12 w-full flex items-center justify-center rounded-md text-white font-medium"
           >
             {isLoading ? (
               <div className="animate-spin">
