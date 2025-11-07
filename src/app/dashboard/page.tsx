@@ -2,8 +2,6 @@
 
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-
-import Navigation from "@/components/Navigation";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import {
@@ -41,12 +39,12 @@ export default function DashboardPage() {
   ];
 
   const menuItems: MenuItem[] = [
-    { title: "Gestão de Membros", icon: Users, path: "/dashboard/membros" },
-    { title: "Gestão de Células", icon: Home, path: "/dashboard/celulas" },
+    { title: "Gestão de Membros", icon: Users, path: "/dashboard/members" },
+    { title: "Gestão de Células", icon: Home, path: "/dashboard/cells" },
     { title: "Gestão de EBD", icon: BookOpen, path: "/dashboard/ebd" },
-    { title: "Gestão de Eventos", icon: Calendar, path: "/dashboard/eventos" },
-    { title: "Gestão Financeira", icon: DollarSign, path: "/dashboard/financeiro" },
-    { title: "Comunicação", icon: TrendingUp, path: "/dashboard/comunicacao" },
+    { title: "Gestão de Eventos", icon: Calendar, path: "/dashboard/events" },
+    { title: "Gestão Financeira", icon: DollarSign, path: "/dashboard/finance" },
+    { title: "Comunicação", icon: TrendingUp, path: "/dashboard/communication" },
   ];
 
   return (

@@ -1,8 +1,6 @@
 import { ReactNode } from "react";
 import Navigation from "@/components/Navigation";
-import { Button } from "@/components/ui/button";
-import { ChevronLeft } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { useRouter } from "next/navigation";
 
 interface DashboardLayoutProps {
   children: ReactNode;
@@ -13,7 +11,7 @@ interface DashboardLayoutProps {
 }
 
 const DashboardLayout = ({ children, title, subtitle, breadcrumbs, action }: DashboardLayoutProps) => {
-  const navigate = useNavigate();
+  const navigate = useRouter();
 
   return (
     <div className="min-h-screen bg-background">
@@ -26,7 +24,7 @@ const DashboardLayout = ({ children, title, subtitle, breadcrumbs, action }: Das
               <div key={index} className="flex items-center gap-2">
                 {crumb.href ? (
                   <button
-                    onClick={() => navigate(crumb.href!)}
+                    onClick={() => navigate.push(crumb.href!)}
                     className="hover:text-primary transition-colors"
                   >
                     {crumb.label}
@@ -43,14 +41,7 @@ const DashboardLayout = ({ children, title, subtitle, breadcrumbs, action }: Das
         {/* Header */}
         <div className="flex items-start justify-between mb-8">
           <div className="flex items-center gap-4">
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() => navigate("/dashboard")}
-              className="shrink-0"
-            >
-              <ChevronLeft className="w-5 h-5" />
-            </Button>
+    
             <div>
               <h1 className="text-3xl font-bold text-foreground mb-2">{title}</h1>
               {subtitle && <p className="text-muted-foreground">{subtitle}</p>}
