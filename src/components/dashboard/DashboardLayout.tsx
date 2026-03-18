@@ -1,60 +1,55 @@
-import { ReactNode } from "react";
-import Navigation from "@/components/Navigation";
-import { useRouter } from "next/navigation";
+import type { ReactNode } from "react";
+
+import Link from "next/link";
+
+import { Button, type ButtonProps } from "@/components/ui/button";
+
+type DashboardAction = {
+  label: string;
+  href: string;
+  variant?: ButtonProps["variant"];
+};
 
 interface DashboardLayoutProps {
   children: ReactNode;
   title: string;
   subtitle?: string;
-  breadcrumbs?: { label: string; href?: string }[];
-  action?: ReactNode;
+  eyebrow?: string;
+  actions?: DashboardAction[];
 }
 
-const DashboardLayout = ({ children, title, subtitle, breadcrumbs, action }: DashboardLayoutProps) => {
-  const navigate = useRouter();
-
+export default function DashboardLayout({
+  children,
+  title,
+  subtitle,
+  eyebrow = "Gestão da igreja",
+  actions,
+}: DashboardLayoutProps) {
   return (
-    <div className="min-h-screen bg-background">
-      <Navigation />
-      <div className="container mx-auto px-4 pt-24 pb-12">
-        {/* Breadcrumbs */}
-        {breadcrumbs && (
-          <div className="flex items-center gap-2 text-sm text-muted-foreground mb-4">
-            {breadcrumbs.map((crumb, index) => (
-              <div key={index} className="flex items-center gap-2">
-                {crumb.href ? (
-                  <button
-                    onClick={() => navigate.push(crumb.href!)}
-                    className="hover:text-primary transition-colors"
-                  >
-                    {crumb.label}
-                  </button>
-                ) : (
-                  <span className="text-foreground">{crumb.label}</span>
-                )}
-                {index < breadcrumbs.length - 1 && <span>/</span>}
-              </div>
-            ))}
+    <div className="space-y-8">
+      <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
+        <div className="space-y-3">
+          <span className="inline-flex rounded-full border border-primary/20 bg-primary/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-primary">
+            {eyebrow}
+          </span>
+          <div className="space-y-2">
+            <h1 className="text-3xl font-semibold tracking-tight text-foreground md:text-4xl">{title}</h1>
+            {subtitle ? <p className="max-w-3xl text-base text-muted-foreground">{subtitle}</p> : null}
           </div>
-        )}
-
-        {/* Header */}
-        <div className="flex items-start justify-between mb-8">
-          <div className="flex items-center gap-4">
-    
-            <div>
-              <h1 className="text-3xl font-bold text-foreground mb-2">{title}</h1>
-              {subtitle && <p className="text-muted-foreground">{subtitle}</p>}
-            </div>
-          </div>
-          {action && <div>{action}</div>}
         </div>
 
-        {/* Content */}
-        {children}
+        {actions?.length ? (
+          <div className="flex flex-wrap gap-3">
+            {actions.map((action) => (
+              <Button key={action.href} asChild variant={action.variant ?? "default"}>
+                <Link href={action.href}>{action.label}</Link>
+              </Button>
+            ))}
+          </div>
+        ) : null}
       </div>
+
+      {children}
     </div>
   );
-};
-
-export default DashboardLayout;
+}

@@ -1,88 +1,47 @@
+import Link from "next/link";
+import { Heart } from "lucide-react";
+
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Music, Users, Baby, Briefcase, Heart, Zap } from "lucide-react";
+import { ministryOpportunities } from "@/lib/platform/data";
 
-const MinistriesSection = () => {
-  const ministries = [
-    {
-      icon: Music,
-      name: "Louvor e Adoração",
-      description: "Ministério de música que conduz a igreja em adoração",
-    },
-    {
-      icon: Baby,
-      name: "Kids",
-      description: "Evangelização e ensino para crianças de 0 a 12 anos",
-    },
-    {
-      icon: Users,
-      name: "Jovens",
-      description: "Discipulado e atividades para adolescentes e jovens",
-    },
-    {
-      icon: Heart,
-      name: "Intercessão",
-      description: "Oração em favor da igreja e do Reino de Deus",
-    },
-    {
-      icon: Briefcase,
-      name: "Atos de Homens",
-      description: "Fortalecimento espiritual masculino",
-    },
-    {
-      icon: Zap,
-      name: "Gênesis",
-      description: "Ministério de mulheres cristãs",
-    },
-  ];
-
+export default function MinistriesSection() {
   return (
-    <section id="ministerios" className="py-20 bg-background">
+    <section id="ministerios" className="bg-background py-24">
       <div className="container mx-auto px-4">
-        <div className="max-w-3xl mx-auto text-center mb-12">
-          <div className="inline-flex items-center justify-center p-3 bg-primary-light rounded-lg mb-4">
-            <Heart className="w-8 h-8 text-primary" />
+        <div className="mx-auto mb-12 max-w-3xl text-center">
+          <div className="mb-4 inline-flex items-center justify-center rounded-2xl bg-primary-light p-3">
+            <Heart className="h-8 w-8 text-primary" />
           </div>
-          <h2 className="text-primary mb-4">Faça Parte do Reino</h2>
-          <p className="text-lg text-muted-foreground">
-            Use seus dons e talentos para servir ao Senhor e edificar a igreja
-          </p>
+          <h2 className="mb-4 text-primary">Faca Parte do Reino</h2>
+          <p className="text-lg text-muted-foreground">O membro pode demonstrar interesse, e a lideranca acompanha o processo ate a integracao real no ministerio.</p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-          {ministries.map((ministry, index) => {
-            const Icon = ministry.icon;
-            return (
-              <Card key={index} className="hover:shadow-medium transition-smooth group">
-                <CardHeader>
-                  <div className="bg-primary-light p-3 rounded-lg w-fit mb-3 group-hover:scale-110 transition-smooth">
-                    <Icon className="w-6 h-6 text-primary" />
-                  </div>
-                  <CardTitle className="text-lg">{ministry.name}</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-muted-foreground mb-4">{ministry.description}</p>
-                  <Button variant="outline" size="sm" className="w-full">
-                    Quero Servir
-                  </Button>
-                </CardContent>
-              </Card>
-            );
-          })}
+        <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+          {ministryOpportunities.map((ministry) => (
+            <Card key={ministry.id} className="border-border/70 transition-smooth hover:shadow-medium">
+              <CardHeader>
+                <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-2xl bg-primary-light">
+                  <Heart className="h-5 w-5 text-primary" />
+                </div>
+                <CardTitle className="text-lg">{ministry.name}</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-3">
+                <p className="text-sm text-muted-foreground">{ministry.description}</p>
+                <p className="text-xs text-muted-foreground">Coordenacao: {ministry.coordinator}</p>
+                <Button asChild className="w-full" variant="outline" size="sm">
+                  <Link href="/login">Quero servir</Link>
+                </Button>
+              </CardContent>
+            </Card>
+          ))}
         </div>
 
-        <div className="bg-primary-light border border-primary/20 rounded-xl p-8 max-w-2xl mx-auto text-center">
-          <h3 className="text-xl font-semibold mb-4 text-primary">
-            "Como bom despenseiro da multiforme graça de Deus, sirva aos outros com o dom que recebeu."
-          </h3>
-          <p className="text-muted-foreground mb-6">1 Pedro 4:10</p>
-          <Button size="lg">
-            Conversar com um Líder
-          </Button>
+        <div className="mx-auto mt-12 max-w-3xl rounded-[28px] border border-primary/20 bg-primary-light p-8 text-center">
+          <h3 className="text-xl font-semibold text-primary">&ldquo;Como bom despenseiro da multiforme graca de Deus, sirva aos outros com o dom que recebeu.&rdquo;</h3>
+          <p className="mt-2 text-muted-foreground">1 Pedro 4:10</p>
         </div>
       </div>
     </section>
   );
-};
-
-export default MinistriesSection;
+}

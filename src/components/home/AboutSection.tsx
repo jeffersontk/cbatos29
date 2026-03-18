@@ -1,66 +1,60 @@
+import Link from "next/link";
+import { Book, Heart, Users } from "lucide-react";
+
 import { Button } from "@/components/ui/button";
-import { Heart, Book, Users } from "lucide-react";
 
-const AboutSection = () => {
-  const values = [
-    {
-      icon: Heart,
-      title: "Comunhão",
-      description: "Vivemos em amor e unidade, cuidando uns dos outros como família.",
-    },
-    {
-      icon: Book,
-      title: "Ensino",
-      description: "Fundamentados na Palavra, crescemos juntos no conhecimento de Deus.",
-    },
-    {
-      icon: Users,
-      title: "Missão",
-      description: "Levamos o Evangelho além das quatro paredes, vivendo Atos 29 hoje.",
-    },
-  ];
+const values = [
+  {
+    icon: Heart,
+    title: "Comunhao",
+    description: "Uma igreja local que cuida das pessoas de perto, em cultos, celulas e relacionamentos reais.",
+  },
+  {
+    icon: Book,
+    title: "Ensino",
+    description: "EBD organizada com turmas, materiais, professores e acompanhamento da caminhada de cada aluno.",
+  },
+  {
+    icon: Users,
+    title: "Missao",
+    description: "Membros servindo com clareza nos ministerios, eventos e frentes que a igreja precisa fortalecer.",
+  },
+];
 
+export default function AboutSection() {
   return (
-    <section id="sobre" className="py-20 bg-background">
+    <section id="sobre" className="bg-background py-24">
       <div className="container mx-auto px-4">
-        <div className="max-w-4xl mx-auto text-center space-y-6 mb-16">
+        <div className="mx-auto mb-14 max-w-4xl space-y-6 text-center">
           <h2 className="text-primary">Quem Somos</h2>
-          <p className="text-lg text-muted-foreground leading-relaxed">
-            A CB Atos 29 é uma comunidade batista comprometida com o Evangelho de Cristo.
-            Nossa visão é ser uma igreja que vive a fé além das quatro paredes, 
-            transformando vidas através do amor, da Palavra e do serviço ao próximo.
+          <p className="text-lg leading-relaxed text-muted-foreground">
+            A CB Atos 29 e uma comunidade batista comprometida com o Evangelho de Cristo. O projeto desta plataforma nasce para sustentar o cuidado da igreja com mais ordem, visibilidade e servico.
           </p>
-          <p className="text-xl font-semibold text-foreground">
-            "Ser igreja além das quatro paredes, vivendo Atos 29 hoje."
-          </p>
+          <p className="text-xl font-semibold text-foreground">&ldquo;Ser igreja alem das quatro paredes, vivendo Atos 29 hoje.&rdquo;</p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-          {values.map((value, index) => {
+        <div className="grid gap-8 md:grid-cols-3">
+          {values.map((value) => {
             const Icon = value.icon;
+
             return (
-              <div
-                key={index}
-                className="bg-card p-8 rounded-xl shadow-soft hover:shadow-medium transition-smooth border border-border"
-              >
-                <div className="bg-primary-light p-4 rounded-lg w-fit mb-4">
-                  <Icon className="w-8 h-8 text-primary" />
+              <div key={value.title} className="rounded-3xl border border-border bg-card p-8 shadow-soft transition-smooth hover:shadow-medium">
+                <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-primary-light">
+                  <Icon className="h-7 w-7 text-primary" />
                 </div>
-                <h3 className="text-xl font-semibold mb-3">{value.title}</h3>
+                <h3 className="mb-3 text-xl font-semibold">{value.title}</h3>
                 <p className="text-muted-foreground">{value.description}</p>
               </div>
             );
           })}
         </div>
 
-        <div className="text-center">
-          <Button size="lg" variant="default">
-            Conheça Nossa História
+        <div className="mt-12 text-center">
+          <Button asChild size="lg">
+            <Link href="/login">Fazer login</Link>
           </Button>
         </div>
       </div>
     </section>
   );
-};
-
-export default AboutSection;
+}

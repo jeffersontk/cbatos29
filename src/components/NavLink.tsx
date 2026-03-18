@@ -1,23 +1,26 @@
 "use client";
 
-import Link, { LinkProps } from "next/link";
-import { usePathname } from "next/navigation";
 import { forwardRef } from "react";
+import Link, { type LinkProps } from "next/link";
+import { usePathname } from "next/navigation";
+
 import { cn } from "@/lib/utils";
 
 type Props = LinkProps & {
   children: React.ReactNode;
   className?: string;
   activeClassName?: string;
-  pendingClassName?: string; // mantido por compatibilidade (não se aplica ao Next)
+  exact?: boolean;
 };
 
 const NavLink = forwardRef<HTMLAnchorElement, Props>(
-  ({ className, activeClassName, pendingClassName: _ignored, href, children, ...rest }, ref) => {
+  ({ className, activeClassName, exact = false, href, children, ...rest }, ref) => {
     const pathname = usePathname();
     const isActive =
       typeof href === "string"
-        ? pathname === href || pathname?.startsWith(String(href))
+        ? exact
+          ? pathname === href
+          : pathname === href || pathname?.startsWith(`${href}/`)
         : pathname === href.pathname;
 
     return (
@@ -31,8 +34,9 @@ const NavLink = forwardRef<HTMLAnchorElement, Props>(
         {children}
       </Link>
     );
-  }
+  },
 );
 
 NavLink.displayName = "NavLink";
+
 export { NavLink };
