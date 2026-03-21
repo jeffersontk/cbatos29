@@ -1,7 +1,7 @@
-"use client";
+﻿"use client";
 
 import Link from "next/link";
-import { Calendar, Church, Clock, LogIn, MapPin } from "lucide-react";
+import { Calendar, Church, Clock, MapPin } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { churchProfile } from "@/lib/platform/data";
@@ -23,7 +23,7 @@ export default function Footer() {
                 <p className="text-sm text-primary-foreground/80">{churchProfile.subtitle}</p>
               </div>
             </div>
-            <p className="text-sm text-primary-foreground/80">{churchProfile.mission}</p>
+            <p className="text-sm text-primary-foreground/80">Uma comunidade que vive o Evangelho no dia a dia.</p>
           </div>
 
           <div className="space-y-4">
@@ -47,31 +47,34 @@ export default function Footer() {
           <div className="space-y-4">
             <h4 className="font-semibold">Acessos rapidos</h4>
             <div className="flex flex-col gap-2 text-sm">
-              <Link href="/login" className="transition-opacity hover:opacity-80">
-                Login da plataforma
+              <Link href="/#sobre" className="transition-opacity hover:opacity-80">
+                Mais do que um lugar, uma familia
               </Link>
               <Link href="/calendar" className="transition-opacity hover:opacity-80">
-                Calendario da igreja
+                Agenda da igreja
               </Link>
-              <span className="text-primary-foreground/70">Solicitacao de acesso disponivel dentro do login</span>
+              <Link href="/login" className="transition-opacity hover:opacity-80">
+                Area do membro
+              </Link>
             </div>
           </div>
 
           <div className="space-y-4">
-            <h4 className="font-semibold">Plataforma</h4>
+            <h4 className="font-semibold">Voce e bem-vindo aqui</h4>
             <div className="space-y-3 text-sm text-primary-foreground/85">
-              <p>Um login unico identifica o conjunto de roles do usuario e libera a area correta automaticamente.</p>
+              <p>Independentemente da sua historia, acreditamos que Deus tem algo novo para sua vida.</p>
+              <p>Venha fazer parte dessa familia e caminhar conosco.</p>
               <div className="flex gap-3">
                 <Button asChild variant="outline" className="border-white/20 bg-white/10 text-white hover:bg-white/20">
-                  <Link href="/login">
-                    <LogIn className="mr-2 h-4 w-4" />
-                    Login
+                  <Link href="/#sobre">
+                    <Church className="mr-2 h-4 w-4" />
+                    Conhecer
                   </Link>
                 </Button>
                 <Button asChild variant="outline" className="border-white/20 bg-white/10 text-white hover:bg-white/20">
                   <Link href="/calendar">
                     <Calendar className="mr-2 h-4 w-4" />
-                    Agenda
+                    Ver agenda
                   </Link>
                 </Button>
               </div>
@@ -89,10 +92,11 @@ export default function Footer() {
 
         <div className="mt-8 border-t border-white/15 pt-6 text-center text-sm text-primary-foreground/80">
           <p>
-            © {new Date().getFullYear()} <Link href="/">CB Atos 29</Link>. Plataforma institucional e de gestao da igreja.
+            &copy; {new Date().getFullYear()} <Link href="/">CB Atos 29</Link>. Uma comunidade que vive o Evangelho no dia a dia.
           </p>
         </div>
       </div>
     </footer>
   );
 }
+

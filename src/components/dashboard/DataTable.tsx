@@ -21,37 +21,50 @@ export default function DataTable<T>({
   emptyMessage = "Nenhum registro encontrado.",
 }: DataTableProps<T>) {
   return (
-    <Card>
-      <Table>
-        <TableHeader>
-          <TableRow>
-            {columns.map((column, index) => (
-              <TableHead key={index} className={column.className}>
-                {column.header}
-              </TableHead>
-            ))}
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {data.length === 0 ? (
-            <TableRow>
-              <TableCell colSpan={columns.length} className="py-8 text-center text-muted-foreground">
-                {emptyMessage}
-              </TableCell>
-            </TableRow>
-          ) : (
-            data.map((row, rowIndex) => (
-              <TableRow key={rowIndex}>
+    <Card className="overflow-hidden border-border/70">
+      {data.length === 0 ? (
+        <div className="px-4 py-8 text-center text-sm text-muted-foreground sm:px-6">{emptyMessage}</div>
+      ) : (
+        <>
+          <div className="divide-y md:hidden">
+            {data.map((row, rowIndex) => (
+              <div key={rowIndex} className="space-y-4 p-4">
                 {columns.map((column, colIndex) => (
-                  <TableCell key={colIndex} className={column.className}>
-                    {column.cell(row)}
-                  </TableCell>
+                  <div key={colIndex} className="space-y-1">
+                    <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-muted-foreground">{column.header}</p>
+                    <div>{column.cell(row)}</div>
+                  </div>
                 ))}
-              </TableRow>
-            ))
-          )}
-        </TableBody>
-      </Table>
+              </div>
+            ))}
+          </div>
+
+          <div className="hidden md:block">
+            <Table className="min-w-[720px]">
+              <TableHeader>
+                <TableRow>
+                  {columns.map((column, index) => (
+                    <TableHead key={index} className={column.className}>
+                      {column.header}
+                    </TableHead>
+                  ))}
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {data.map((row, rowIndex) => (
+                  <TableRow key={rowIndex}>
+                    {columns.map((column, colIndex) => (
+                      <TableCell key={colIndex} className={column.className}>
+                        {column.cell(row)}
+                      </TableCell>
+                    ))}
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </div>
+        </>
+      )}
     </Card>
   );
 }

@@ -4,43 +4,62 @@ import DashboardLayout from "@/components/dashboard/DashboardLayout";
 import KpiCard from "@/components/dashboard/KpiCard";
 import StatusBadge from "@/components/dashboard/StatusBadge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { dashboardMetrics, eventRegistrations, platformModules, roadmap } from "@/lib/platform/data";
+import { ebdClasses, eventRegistrations, events, members, platformModules } from "@/lib/platform/data";
 
 const metricIcons = [Users, GraduationCap, Sparkles, ShoppingBag];
+const metricHelpers = [
+  "Pessoas com cadastro e acompanhamento ativo.",
+  "Turmas em andamento na igreja.",
+  "Encontros com inscricoes abertas.",
+  "Escalas confirmadas para os ministerios.",
+];
+
+const nextSteps = [
+  { title: "Acesso", description: "Ajustar senha, recuperacao de conta e entrada dos membros." },
+  { title: "Cadastros", description: "Continuar organizando membros, familias, celulas e inscricoes." },
+  { title: "Pagamentos", description: "Concluir eventos pagos, loja e envio de comprovacoes." },
+];
+
+const dashboardMetrics = [
+  { label: "Membros acompanhados", value: String(members.length) },
+  { label: "Turmas da EBD", value: String(ebdClasses.length) },
+  { label: "Eventos em aberto", value: String(events.length) },
+  { label: "Escalas ativas", value: "4" },
+];
 
 export default function DashboardPage() {
   return (
     <DashboardLayout
-      title="Visao geral da plataforma"
-      subtitle="Este painel centraliza os modulos administrativos. O membro agora entra em um portal proprio, separado da gestao."
+      title="Painel da igreja"
+      subtitle="Acompanhe membros, turmas, eventos e escalas em um so lugar."
       actions={[
-        { label: "Ver calendario", href: "/dashboard/calendar", variant: "outline" },
-        { label: "Consumir API da plataforma", href: "/api/platform", variant: "secondary" },
+        { label: "Calendario", href: "/dashboard/calendar", variant: "outline" },
+        { label: "Membros", href: "/dashboard/members", variant: "secondary" },
       ]}
     >
-      <section className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+      <section className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
         {dashboardMetrics.map((metric, index) => {
           const Icon = metricIcons[index];
-          return <KpiCard key={metric.label} title={metric.label} value={metric.value} helper={metric.helper} icon={Icon} />;
+          return <KpiCard key={metric.label} title={metric.label} value={metric.value} helper={metricHelpers[index]} icon={Icon} />;
         })}
       </section>
 
       <section className="grid gap-6 xl:grid-cols-[1.5fr_1fr]">
         <Card className="border-border/70">
-          <CardHeader className="flex flex-row items-start justify-between gap-4">
+          <CardHeader className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
             <div className="space-y-2">
-              <CardTitle className="text-xl">Mapa dos modulos</CardTitle>
-              <p className="text-sm text-muted-foreground">Escopo distribuido entre gestao, operacao da igreja e experiencia do membro.</p>
+              <CardTitle className="text-xl">Areas em uso hoje</CardTitle>
+              <p className="text-sm text-muted-foreground">Veja o que ja esta em uso hoje na igreja.</p>
             </div>
-            <StatusBadge label="Base unificada" tone="info" />
+            <StatusBadge label="Em uso" tone="info" />
           </CardHeader>
-          <CardContent className="grid gap-4 md:grid-cols-2">
+          <CardContent className="grid gap-4 sm:grid-cols-2">
             {platformModules.map((module) => (
               <div key={module.slug} className="rounded-2xl border border-border/70 bg-background p-4">
-                <div className="mb-3 flex items-center justify-between gap-3">
+                <div className="mb-3 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                   <h3 className="font-semibold text-foreground">{module.title}</h3>
                   <StatusBadge
-                    label={module.stage === "ativo" ? "Pronto para evoluir" : module.stage === "planejado" ? "Planejado" : "Em breve"}
+                    label={module.stage === "ativo" ? "Ativo" : module.stage === "planejado" ? "Planejado" : "Em breve"}
                     tone={module.stage === "ativo" ? "success" : module.stage === "planejado" ? "warning" : "neutral"}
                   />
                 </div>
@@ -52,10 +71,10 @@ export default function DashboardPage() {
 
         <Card className="border-border/70">
           <CardHeader>
-            <CardTitle className="text-xl">Prioridades tecnicas</CardTitle>
+            <CardTitle className="text-xl">Proximos ajustes</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
-            {roadmap.map((item) => (
+            {nextSteps.map((item) => (
               <div key={item.title} className="rounded-2xl border border-border/70 bg-background p-4">
                 <div className="mb-2 flex items-center gap-2">
                   <Calendar className="h-4 w-4 text-primary" />
@@ -71,7 +90,7 @@ export default function DashboardPage() {
       <section className="grid gap-6 xl:grid-cols-[1.2fr_1fr]">
         <Card className="border-border/70">
           <CardHeader>
-            <CardTitle className="text-xl">Fluxo de eventos em andamento</CardTitle>
+            <CardTitle className="text-xl">Inscricoes recentes</CardTitle>
           </CardHeader>
           <CardContent className="space-y-3">
             {eventRegistrations.map((registration) => (
@@ -82,7 +101,7 @@ export default function DashboardPage() {
                 <div>
                   <p className="font-semibold text-foreground">{registration.memberName}</p>
                   <p className="text-sm text-muted-foreground">{registration.eventTitle}</p>
-                  <p className="text-xs text-muted-foreground">Solicitacao em {registration.requestedAt}</p>
+                  <p className="text-xs text-muted-foreground">Pedido em {registration.requestedAt}</p>
                 </div>
                 <div className="flex flex-wrap gap-2">
                   <StatusBadge
@@ -98,12 +117,12 @@ export default function DashboardPage() {
 
         <Card className="border-border/70 bg-primary text-primary-foreground">
           <CardHeader>
-            <CardTitle className="text-xl">Estado atual da separacao</CardTitle>
+            <CardTitle className="text-xl">Neste momento</CardTitle>
           </CardHeader>
           <CardContent className="space-y-3 text-sm text-primary-foreground/90">
-            <p>Dashboard liberado conforme o conjunto de roles operacionais do usuario.</p>
-            <p>Portal do membro separado com perfil, familia, celula, escalas, agenda e comprovacao de inscricoes.</p>
-            <p>Proxima camada critica: persistencia real, uploads da EBD e pagamentos para eventos e loja.</p>
+            <p>Membros, turmas, eventos e escalas ja podem ser acompanhados neste painel.</p>
+            <p>O calendario segue publico para a igreja inteira.</p>
+            <p>O financeiro completo ainda esta sendo organizado.</p>
           </CardContent>
         </Card>
       </section>

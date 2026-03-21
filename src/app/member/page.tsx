@@ -3,7 +3,7 @@ import { redirect } from "next/navigation";
 import MemberDashboardClient from "@/components/member/MemberDashboardClient";
 import { getAuthSession } from "@/lib/auth/server";
 import { hasMemberPortalAccess } from "@/lib/auth/session";
-import { getMemberSnapshot } from "@/lib/platform/data";
+import { getMemberSnapshotForSession } from "@/lib/platform/server";
 
 export default async function MemberPage() {
   const session = await getAuthSession();
@@ -12,11 +12,7 @@ export default async function MemberPage() {
     redirect("/login?next=/member");
   }
 
-  const snapshot = getMemberSnapshot(session.memberId, {
-    fallbackName: session.name,
-    fallbackEmail: session.email,
-    source: session.source === "signup" ? "signup" : "imported",
-  });
+  const snapshot = await getMemberSnapshotForSession(session);
 
   return <MemberDashboardClient snapshot={snapshot} session={session} />;
 }

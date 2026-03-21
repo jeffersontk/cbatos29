@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import Link from "next/link";
 import { useState, type FormEvent } from "react";
@@ -82,7 +82,7 @@ export default function MemberDashboardClient({
       phone: "",
       linkedToCell: cellConnection.id !== "cell-pending",
     });
-    setFamilyMessage("Familiar adicionado. O passo seguinte e persistir isso na base real.");
+    setFamilyMessage("Familiar adicionado ao portal.");
   }
 
   function handleCellRequest(option: AvailableCellOption) {
@@ -94,9 +94,9 @@ export default function MemberDashboardClient({
       neighborhood: option.neighborhood,
       memberCount: option.memberCount,
       householdLinkedCount: linkedFamilyCount,
-      requestStatus: "Solicitacao enviada para validacao da lideranca da celula.",
+      requestStatus: "Solicitacao enviada para a lideranca da celula.",
     });
-    setCellMessage(`Solicitacao preparada para a celula ${option.name}.`);
+    setCellMessage(`Solicitacao enviada para a celula ${option.name}.`);
   }
 
   return (
@@ -108,7 +108,7 @@ export default function MemberDashboardClient({
               <Church className="h-5 w-5" />
             </div>
             <div>
-              <p className="text-sm font-semibold uppercase tracking-[0.2em] text-primary">Portal do membro</p>
+              <p className="text-sm font-semibold uppercase tracking-[0.2em] text-primary">Area do membro</p>
               <p className="text-sm text-muted-foreground">{snapshot.profile.name}</p>
             </div>
           </div>
@@ -135,11 +135,11 @@ export default function MemberDashboardClient({
           <div className="grid gap-6 lg:grid-cols-[1.5fr_1fr]">
             <div className="space-y-4">
               <span className="inline-flex rounded-full border border-white/20 bg-white/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em]">
-                Area pessoal e familiar
+                Sua area
               </span>
-              <h1 className="text-4xl font-semibold tracking-tight">O membro ve o proprio painel, nao a gestao da igreja.</h1>
+              <h1 className="text-4xl font-semibold tracking-tight">Tudo o que voce acompanha na igreja, em um so lugar.</h1>
               <p className="max-w-2xl text-primary-foreground/85">
-                Perfil, familia, EBD, escalas, celula, calendario e comprovacao de inscricoes ficam no mesmo lugar.
+                Veja sua turma da EBD, sua celula, sua familia, suas escalas e suas inscricoes.
               </p>
               <div className="flex flex-wrap gap-2">
                 <StatusBadge label={snapshot.profile.status} tone="success" />
@@ -164,13 +164,13 @@ export default function MemberDashboardClient({
         <section className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
           <KpiCard title="Turma atual" value={snapshot.currentClass.name} helper={snapshot.currentClass.schedule} icon={BookOpenCheck} />
           <KpiCard title="Familia no portal" value={String(familyMembers.length + 1)} helper={`${linkedFamilyCount} familiar(es) ligados a celula.`} icon={Users} />
-          <KpiCard title="Escalas confirmadas" value={String(confirmedAssignments)} helper="Visiveis no painel do membro." icon={HeartHandshake} />
-          <KpiCard title="Eventos inscritos" value={String(snapshot.enrolledEvents.length)} helper="Com status e comprovacao no proprio portal." icon={CalendarClock} />
+          <KpiCard title="Escalas confirmadas" value={String(confirmedAssignments)} helper="Compromissos confirmados para voce." icon={HeartHandshake} />
+          <KpiCard title="Eventos inscritos" value={String(snapshot.enrolledEvents.length)} helper="Inscricoes acompanhadas por aqui." icon={CalendarClock} />
         </section>
 
         {!hasValidatedAccount ? (
           <div className="rounded-3xl border border-amber-200 bg-amber-50 px-5 py-4 text-sm text-amber-800">
-            Seu cadastro inicial ja entrou no portal do membro, mas ainda depende de validacao para completar dados importados e historico.
+            Seu cadastro foi recebido e ainda esta em validacao.
           </div>
         ) : null}
 
@@ -178,7 +178,7 @@ export default function MemberDashboardClient({
           <Card className="border-border/70">
             <CardHeader>
               <CardTitle className="text-xl">Meu perfil</CardTitle>
-              <CardDescription>Informacoes usadas para integracao pastoral, EBD, eventos e ministerios.</CardDescription>
+              <CardDescription>Seus dados de contato e caminhada na igreja.</CardDescription>
             </CardHeader>
             <CardContent className="grid gap-4 md:grid-cols-2">
               <div className="rounded-2xl border border-border/70 bg-background p-4">
@@ -212,7 +212,7 @@ export default function MemberDashboardClient({
           <Card className="border-border/70">
             <CardHeader>
               <CardTitle className="text-xl">Minha celula</CardTitle>
-              <CardDescription>O portal ajuda a lideranca a enxergar quantas pessoas realmente estao conectadas a celula.</CardDescription>
+              <CardDescription>Acompanhe sua celula e, se precisar, solicite mudanca.</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="rounded-2xl border border-border/70 bg-background p-4">
@@ -261,7 +261,7 @@ export default function MemberDashboardClient({
           <Card className="border-border/70">
             <CardHeader>
               <CardTitle className="text-xl">Familia vinculada</CardTitle>
-              <CardDescription>Adicione familiares para o cuidado pastoral e para o mapa real da celula.</CardDescription>
+              <CardDescription>Cadastre familiares para facilitar o cuidado e o acompanhamento.</CardDescription>
             </CardHeader>
             <CardContent className="space-y-5">
               <div className="grid gap-4">
@@ -329,7 +329,7 @@ export default function MemberDashboardClient({
           <Card className="border-border/70">
             <CardHeader>
               <CardTitle className="text-xl">Escala e agenda</CardTitle>
-              <CardDescription>O lider escala, o membro acompanha, e o calendario comum fica visivel no mesmo painel.</CardDescription>
+              <CardDescription>Veja suas escalas e os proximos compromissos.</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               {snapshot.servingAssignments.map((assignment) => (
@@ -342,7 +342,7 @@ export default function MemberDashboardClient({
                     <StatusBadge label={assignment.status} tone={assignment.status === "Confirmado" ? "success" : "warning"} />
                   </div>
                   <p className="text-sm text-muted-foreground">
-                    {assignment.date} • {assignment.time}
+                    {assignment.date} | {assignment.time}
                   </p>
                   <p className="text-sm text-muted-foreground">Lider responsavel: {assignment.leader}</p>
                 </div>
@@ -355,7 +355,7 @@ export default function MemberDashboardClient({
                     <StatusBadge label={entry.category} tone="info" />
                   </div>
                   <p className="text-sm text-muted-foreground">
-                    {entry.date} • {entry.time}
+                    {entry.date} | {entry.time}
                   </p>
                 </div>
               ))}
@@ -367,7 +367,7 @@ export default function MemberDashboardClient({
           <Card className="border-border/70">
             <CardHeader>
               <CardTitle className="text-xl">Eventos e comprovacoes</CardTitle>
-              <CardDescription>Inscricoes do membro ficam visiveis aqui com pagamento e codigo de confirmacao.</CardDescription>
+              <CardDescription>Acompanhe inscricoes, pagamentos e confirmacoes.</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               {snapshot.enrolledEvents.length ? (
@@ -395,7 +395,7 @@ export default function MemberDashboardClient({
           <Card className="border-border/70">
             <CardHeader>
               <CardTitle className="text-xl">EBD, materiais e pedidos</CardTitle>
-              <CardDescription>Check-in da aula, material do professor e pedidos da loja continuam separados da gestao.</CardDescription>
+              <CardDescription>Turma atual, materiais liberados e pedidos da loja.</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="rounded-2xl border border-border/70 bg-background p-4">
@@ -438,9 +438,9 @@ export default function MemberDashboardClient({
               <div className="rounded-2xl border border-primary/20 bg-primary/10 p-4 text-sm text-foreground">
                 <div className="mb-2 flex items-center gap-2 font-semibold">
                   <ShoppingBag className="h-4 w-4 text-primary" />
-                  Proximo passo real
+                  Aviso
                 </div>
-                Persistir esses fluxos em banco e integrar pagamentos para eventos e loja.
+                Em caso de duvidas sobre pedidos ou inscricoes, fale com a secretaria.
               </div>
             </CardContent>
           </Card>
@@ -449,3 +449,4 @@ export default function MemberDashboardClient({
     </div>
   );
 }
+

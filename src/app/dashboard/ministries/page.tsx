@@ -9,17 +9,22 @@ import { ministryInterests, ministryOpportunities } from "@/lib/platform/data";
 export default function MinistriesPage() {
   return (
     <DashboardLayout
-      title="Interesse em ministerios"
-      subtitle="O membro manifesta interesse com contexto, e a lideranca enxerga fila, disponibilidade e integracao real."
+      title="Ministerios"
+      subtitle="Vagas, interesses e acompanhamento das equipes."
       actions={[
-        { label: "Ver membros", href: "/dashboard/members", variant: "outline" },
-        { label: "Ver eventos", href: "/dashboard/events", variant: "secondary" },
+        { label: "Membros", href: "/dashboard/members", variant: "outline" },
+        { label: "Eventos", href: "/dashboard/events", variant: "secondary" },
       ]}
     >
-      <section className="grid gap-4 md:grid-cols-3">
-        <KpiCard title="Frentes abertas" value={String(ministryOpportunities.length)} helper="Ministerios ja mapeados para receber voluntarios." icon={UsersRound} />
-        <KpiCard title="Interesses captados" value={String(ministryInterests.length)} helper="Sinalizacoes que nao podem ficar sem resposta." icon={HandHeart} />
-        <KpiCard title="Papeis em aberto" value={String(ministryOpportunities.reduce((acc, item) => acc + item.openRoles.length, 0))} helper="Vagas praticas para integrar pessoas com clareza." icon={Wrench} />
+      <section className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <KpiCard title="Frentes abertas" value={String(ministryOpportunities.length)} helper="Equipes prontas para receber gente." icon={UsersRound} />
+        <KpiCard title="Interesses" value={String(ministryInterests.length)} helper="Pedidos aguardando retorno." icon={HandHeart} />
+        <KpiCard
+          title="Vagas em aberto"
+          value={String(ministryOpportunities.reduce((acc, item) => acc + item.openRoles.length, 0))}
+          helper="Funcoes disponiveis para novos voluntarios."
+          icon={Wrench}
+        />
       </section>
 
       <section className="grid gap-6 xl:grid-cols-[1.1fr_1fr]">
@@ -30,7 +35,7 @@ export default function MinistriesPage() {
           <CardContent className="space-y-4">
             {ministryOpportunities.map((opportunity) => (
               <div key={opportunity.id} className="rounded-2xl border border-border/70 bg-background p-4">
-                <div className="mb-3 flex items-start justify-between gap-3">
+                <div className="mb-3 flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
                   <div>
                     <p className="font-semibold text-foreground">{opportunity.name}</p>
                     <p className="text-sm text-muted-foreground">{opportunity.coordinator}</p>
@@ -50,12 +55,12 @@ export default function MinistriesPage() {
 
         <Card className="border-border/70">
           <CardHeader>
-            <CardTitle className="text-xl">Fila de integracao</CardTitle>
+            <CardTitle className="text-xl">Acompanhamento</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
             {ministryInterests.map((interest) => (
               <div key={interest.id} className="rounded-2xl border border-border/70 bg-background p-4">
-                <div className="mb-2 flex items-center justify-between gap-3">
+                <div className="mb-2 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                   <p className="font-semibold text-foreground">{interest.memberName}</p>
                   <StatusBadge label={interest.status} tone={interest.status === "Integrado" ? "success" : interest.status === "Em conversa" ? "warning" : "info"} />
                 </div>

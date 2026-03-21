@@ -36,19 +36,19 @@ export default function SignupPageClient({ currentSession }: { currentSession: A
   return (
     <AuthShell
       eyebrow="Cadastro"
-      title="Abra ou valide seu acesso de membro."
-      description="Se a igreja ja importou seus dados, voce valida a conta e o sistema manda para a area correta. Se ainda nao existe cadastro, voce inicia o acesso por aqui."
+      title="Abra ou confirme seu acesso."
+      description="Se seus dados ja estiverem no cadastro da igreja, confirme sua conta. Se ainda nao estiverem, comece por aqui."
       highlights={[
-        "Validacao de conta usando a base importada de membros.",
-        "Novo cadastro ja nasce no portal do membro e sem acesso a gestao.",
-        "O vinculo com familia, celula e EBD pode continuar a partir dessa entrada.",
+        "Quem ja esta no cadastro pode confirmar a conta com email, telefone e uma nova senha.",
+        "Quem esta chegando agora pode abrir o primeiro acesso por aqui com senha propria.",
+        "Depois disso, a igreja continua o acompanhamento com voce.",
       ]}
       currentSession={currentSession}
     >
       <Card className="w-full border-border/70 shadow-medium">
         <CardHeader className="space-y-3">
           <CardTitle className="text-3xl">Cadastro e validacao</CardTitle>
-          <CardDescription>Escolha se voce ja esta na base da igreja ou se vai iniciar um novo acesso.</CardDescription>
+          <CardDescription>Escolha se voce vai confirmar uma conta existente ou abrir um novo cadastro.</CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
           <Tabs defaultValue="existing" className="w-full">
@@ -59,7 +59,7 @@ export default function SignupPageClient({ currentSession }: { currentSession: A
 
             <TabsContent value="existing" className="space-y-5">
               <div className="rounded-2xl border border-border/70 bg-muted/40 p-4 text-sm text-muted-foreground">
-                Use email e telefone que ja estejam no cadastro da igreja para liberar seu portal.
+                Use email e telefone que ja estejam no cadastro da igreja e defina a senha da sua conta.
               </div>
 
               <form action={validationAction} className="space-y-4">
@@ -75,15 +75,33 @@ export default function SignupPageClient({ currentSession }: { currentSession: A
                   <Input id="existing-phone" name="phone" type="tel" placeholder="(21) 99999-0000" autoComplete="tel" />
                 </div>
 
+                <div className="grid gap-4 sm:grid-cols-2">
+                  <div className="space-y-2">
+                    <Label htmlFor="existing-password">Senha</Label>
+                    <Input id="existing-password" name="password" type="password" placeholder="Crie sua senha" autoComplete="new-password" />
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="existing-password-confirmation">Confirmar senha</Label>
+                    <Input
+                      id="existing-password-confirmation"
+                      name="passwordConfirmation"
+                      type="password"
+                      placeholder="Repita a senha"
+                      autoComplete="new-password"
+                    />
+                  </div>
+                </div>
+
                 <ErrorMessage state={validationState} />
 
-                <SubmitButton idleLabel="Validar e entrar" pendingLabel="Validando cadastro..." className="w-full" />
+                <SubmitButton idleLabel="Validar e criar senha" pendingLabel="Validando cadastro..." className="w-full" />
               </form>
             </TabsContent>
 
             <TabsContent value="new" className="space-y-5">
               <div className="rounded-2xl border border-blue-200 bg-blue-50 p-4 text-sm text-blue-800">
-                O cadastro novo cria um acesso inicial no portal do membro. Depois, a igreja valida e enriquece as informacoes importadas.
+                O cadastro novo abre seu primeiro acesso. Depois, a igreja confirma e completa as informacoes.
               </div>
 
               <form action={signupAction} className="space-y-4">
@@ -111,6 +129,24 @@ export default function SignupPageClient({ currentSession }: { currentSession: A
                   </div>
                 </div>
 
+                <div className="grid gap-4 sm:grid-cols-2">
+                  <div className="space-y-2">
+                    <Label htmlFor="signup-password">Senha</Label>
+                    <Input id="signup-password" name="password" type="password" placeholder="Crie sua senha" autoComplete="new-password" />
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="signup-password-confirmation">Confirmar senha</Label>
+                    <Input
+                      id="signup-password-confirmation"
+                      name="passwordConfirmation"
+                      type="password"
+                      placeholder="Repita a senha"
+                      autoComplete="new-password"
+                    />
+                  </div>
+                </div>
+
                 <ErrorMessage state={signupState} />
 
                 <SubmitButton idleLabel="Criar acesso inicial" pendingLabel="Abrindo cadastro..." className="w-full" />
@@ -124,7 +160,7 @@ export default function SignupPageClient({ currentSession }: { currentSession: A
                 <UserRoundCheck className="h-4 w-4 text-primary" />
                 Conta validada
               </div>
-              <p className="text-sm text-muted-foreground">Entra direto no portal do membro com perfil, agenda, eventos e EBD liberados.</p>
+              <p className="text-sm text-muted-foreground">Depois de validar, voce entra com email e senha e acompanha agenda, turma e inscricoes.</p>
             </div>
 
             <div className="rounded-2xl border border-border/70 bg-background p-4">
@@ -132,16 +168,16 @@ export default function SignupPageClient({ currentSession }: { currentSession: A
                 <UserPlus className="h-4 w-4 text-primary" />
                 Novo cadastro
               </div>
-              <p className="text-sm text-muted-foreground">Comeca pelo portal do membro sem enxergar gestao, enquanto a igreja valida os dados.</p>
+              <p className="text-sm text-muted-foreground">Seu acesso ja fica salvo com senha propria, enquanto a igreja continua o atendimento.</p>
             </div>
           </div>
 
           <div className="rounded-2xl border border-emerald-200 bg-emerald-50 p-4 text-sm text-emerald-800">
             <div className="mb-2 flex items-center gap-2 font-semibold">
               <CheckCircle2 className="h-4 w-4" />
-              Regra principal
+              Importante
             </div>
-            Mesmo quando o cadastro comeca por aqui, o membro continua sem acesso aos modulos administrativos da igreja.
+            Se houver qualquer duvida no cadastro, a secretaria da igreja pode ajudar voce a concluir esse processo.
           </div>
         </CardContent>
       </Card>

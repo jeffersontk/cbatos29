@@ -7,24 +7,54 @@ import StatusBadge from "@/components/dashboard/StatusBadge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { eventRegistrations, events } from "@/lib/platform/data";
 
+const monthMap: Record<string, number> = {
+  janeiro: 0,
+  fevereiro: 1,
+  marco: 2,
+  abril: 3,
+  maio: 4,
+  junho: 5,
+  julho: 6,
+  agosto: 7,
+  setembro: 8,
+  outubro: 9,
+  novembro: 10,
+  dezembro: 11,
+};
+
+function parsePtBrDate(date: string, time: string) {
+  const match = date.match(/^(\d{2}) de ([a-z]+) de (\d{4})$/i);
+
+  if (!match) {
+    return Number.POSITIVE_INFINITY;
+  }
+
+  const [, day, monthLabel, year] = match;
+  const month = monthMap[monthLabel.toLowerCase()];
+  const [hours = "00", minutes = "00"] = time.replace("h", ":").split(":");
+
+  return new Date(Number(year), month, Number(day), Number(hours), Number(minutes)).getTime();
+}
+
 export default function EventsPage() {
+  const sortedEvents = [...events].sort((a, b) => parsePtBrDate(a.date, a.time) - parsePtBrDate(b.date, b.time));
   const paidEvents = events.filter((event) => event.paymentStatus === "Pago").length;
   const registrations = eventRegistrations.length;
   const pendingPayments = eventRegistrations.filter((registration) => registration.paymentStatus === "Pendente").length;
 
   return (
     <DashboardLayout
-      title="Eventos e inscrições"
-      subtitle="Eventos gratuitos e pagos precisam compartilhar o mesmo fluxo de cadastro, comunicação, pagamento e operação no dia."
+      title="Eventos"
+      subtitle="Inscricoes, pagamentos e acompanhamento dos encontros."
       actions={[
-        { label: "Abrir calendário", href: "/dashboard/calendar", variant: "outline" },
-        { label: "Ver loja", href: "/dashboard/store", variant: "secondary" },
+        { label: "Calendario", href: "/dashboard/calendar", variant: "outline" },
+        { label: "Loja", href: "/dashboard/store", variant: "secondary" },
       ]}
     >
-      <section className="grid gap-4 md:grid-cols-3">
-        <KpiCard title="Eventos abertos" value={String(events.length)} helper="Agenda ativa para cultos especiais, treinamentos e retiros." icon={MapPinned} />
-        <KpiCard title="Inscrições em andamento" value={String(registrations)} helper="Solicitações já mapeadas para o fluxo do admin." icon={Ticket} />
-        <KpiCard title="Pagamentos pendentes" value={String(pendingPayments)} helper={`${paidEvents} eventos já exigem cobrança no desenho atual.`} icon={CreditCard} />
+      <section className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <KpiCard title="Eventos abertos" value={String(events.length)} helper="Encontros publicados na agenda." icon={MapPinned} />
+        <KpiCard title="Inscricoes" value={String(registrations)} helper="Pedidos recebidos ate agora." icon={Ticket} />
+        <KpiCard title="Pagamentos pendentes" value={String(pendingPayments)} helper={`${paidEvents} evento(s) com cobranca.`} icon={CreditCard} />
       </section>
 
       <section className="grid gap-6 xl:grid-cols-[1.1fr_1.2fr]">
@@ -33,20 +63,21 @@ export default function EventsPage() {
             <CardTitle className="text-xl">Eventos publicados</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
-            {events.map((event) => (
+            {sortedEvents.map((event) => (
               <div key={event.id} className="rounded-2xl border border-border/70 bg-background p-4">
-                <div className="mb-3 flex items-start justify-between gap-4">
+                <div className="mb-3 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
                   <div>
                     <p className="font-semibold text-foreground">{event.title}</p>
-                    <p className="text-sm text-muted-foreground">{event.date}</p>
+                    <p className="text-sm text-muted-foreground">
+                      {event.date} | {event.time}
+                    </p>
                   </div>
                   <StatusBadge label={event.priceLabel} tone={event.paymentStatus === "Pago" ? "warning" : "info"} />
                 </div>
                 <div className="grid gap-2 text-sm text-muted-foreground">
                   <p>{event.location}</p>
-                  <p>{event.time}</p>
                   <p>
-                    {event.registrations}/{event.capacity} inscrições
+                    {event.registrations}/{event.capacity} inscricoes
                   </p>
                   <p>{event.audience}</p>
                 </div>
@@ -72,17 +103,11 @@ export default function EventsPage() {
               cell: (registration) => <span className="text-sm text-foreground">{registration.eventTitle}</span>,
             },
             {
-              header: "Inscrição",
+              header: "Inscricao",
               cell: (registration) => (
                 <StatusBadge
                   label={registration.status}
-                  tone={
-                    registration.status === "Confirmada"
-                      ? "success"
-                      : registration.status === "Pendente"
-                        ? "warning"
-                        : "neutral"
-                  }
+                  tone={registration.status === "Confirmada" ? "success" : registration.status === "Pendente" ? "warning" : "neutral"}
                 />
               ),
             },

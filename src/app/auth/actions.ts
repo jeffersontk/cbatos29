@@ -4,10 +4,12 @@ import { redirect } from "next/navigation";
 
 import { setAuthSession } from "@/lib/auth/server";
 import {
-  previewAccessAccounts,
-  resolveRedirectPath,
-  type AppSession,
-} from "@/lib/auth/session";
+  createSignupAccess,
+  findStoredAccountByEmail,
+  upsertImportedMemberAccount,
+  verifyStoredAccountPassword,
+} from "@/lib/auth/store";
+import { previewAccessAccounts, resolveRedirectPath, type AppSession } from "@/lib/auth/session";
 import { getRolesForMember, members } from "@/lib/platform/data";
 
 export type AuthFormState = {
@@ -23,22 +25,44 @@ function normalizeDigits(value: string) {
   return value.replace(/\D/g, "");
 }
 
-function findImportedMember(email: string, credential: string) {
+function findImportedMemberByPhone(email: string, phone: string) {
   const normalizedEmail = email.toLowerCase();
-  const normalizedCredential = normalizeDigits(credential);
+  const normalizedPhone = normalizeDigits(phone);
 
   return members.find(
     (member) =>
-      member.email.toLowerCase() === normalizedEmail && normalizeDigits(member.phone) === normalizedCredential,
+      member.email.toLowerCase() === normalizedEmail && normalizeDigits(member.phone) === normalizedPhone,
   );
 }
 
-function findPreviewAccessAccount(email: string, credential: string) {
+function findImportedMemberByEmail(email: string) {
+  const normalizedEmail = email.toLowerCase();
+
+  return members.find((member) => member.email.toLowerCase() === normalizedEmail);
+}
+
+function findPreviewAccessAccount(email: string, password: string) {
   const normalizedEmail = email.toLowerCase();
 
   return previewAccessAccounts.find(
-    (account) => account.email.toLowerCase() === normalizedEmail && account.accessKey === credential,
+    (account) => account.email.toLowerCase() === normalizedEmail && account.password === password,
   );
+}
+
+function validatePassword(password: string, passwordConfirmation: string) {
+  if (!password || !passwordConfirmation) {
+    return "Informe e confirme a senha para continuar.";
+  }
+
+  if (password.length < 8) {
+    return "Use uma senha com pelo menos 8 caracteres.";
+  }
+
+  if (password !== passwordConfirmation) {
+    return "A confirmacao da senha nao confere.";
+  }
+
+  return null;
 }
 
 async function createSessionAndRedirect(session: AppSession, nextPath: FormDataEntryValue | null): Promise<never> {
@@ -48,13 +72,33 @@ async function createSessionAndRedirect(session: AppSession, nextPath: FormDataE
 
 export async function loginAction(_: AuthFormState, formData: FormData): Promise<AuthFormState> {
   const email = normalize(formData.get("email"));
-  const credential = normalize(formData.get("credential"));
+  const password = normalize(formData.get("password"));
 
-  if (!email || !credential) {
-    return { status: "error", message: "Informe email e telefone cadastrado ou chave de acesso." };
+  if (!email || !password) {
+    return { status: "error", message: "Informe email e senha para continuar." };
   }
 
-  const previewAccessAccount = findPreviewAccessAccount(email, credential);
+  const storedAccount = await verifyStoredAccountPassword(email, password);
+
+  if (storedAccount) {
+    const roles =
+      storedAccount.source === "imported" && storedAccount.memberId
+        ? getRolesForMember(storedAccount.memberId)
+        : storedAccount.roles;
+
+    return createSessionAndRedirect(
+      {
+        roles,
+        memberId: storedAccount.memberId,
+        name: storedAccount.name,
+        email: storedAccount.email,
+        source: storedAccount.source,
+      },
+      formData.get("next"),
+    );
+  }
+
+  const previewAccessAccount = findPreviewAccessAccount(email, password);
 
   if (previewAccessAccount) {
     return createSessionAndRedirect(
@@ -69,18 +113,66 @@ export async function loginAction(_: AuthFormState, formData: FormData): Promise
     );
   }
 
-  const member = findImportedMember(email, credential);
+  const existingStoredAccount = await findStoredAccountByEmail(email);
+
+  if (existingStoredAccount) {
+    return {
+      status: "error",
+      message: "A senha informada nao confere. Tente novamente.",
+    };
+  }
+
+  if (findImportedMemberByEmail(email)) {
+    return {
+      status: "error",
+      message: "Seu cadastro ja existe. Use a tela de cadastro para confirmar a conta e criar sua senha.",
+    };
+  }
+
+  return {
+    status: "error",
+    message: "Nao encontramos esse usuario. Revise o email e a senha informados.",
+  };
+}
+
+export async function validateExistingMemberAction(_: AuthFormState, formData: FormData): Promise<AuthFormState> {
+  const email = normalize(formData.get("email"));
+  const phone = normalize(formData.get("phone"));
+  const password = normalize(formData.get("password"));
+  const passwordConfirmation = normalize(formData.get("passwordConfirmation"));
+
+  if (!email || !phone) {
+    return { status: "error", message: "Informe email e telefone cadastrados para validar sua conta." };
+  }
+
+  const passwordError = validatePassword(password, passwordConfirmation);
+
+  if (passwordError) {
+    return { status: "error", message: passwordError };
+  }
+
+  const member = findImportedMemberByPhone(email, phone);
 
   if (!member) {
     return {
       status: "error",
-      message: "Nao encontramos esse usuario. Use o telefone cadastrado ou a chave de acesso da equipe.",
+      message: "Nao encontramos esse cadastro. Confira o email e o telefone informados.",
     };
   }
 
+  const roles = getRolesForMember(member.id);
+
+  await upsertImportedMemberAccount({
+    memberId: member.id,
+    name: member.name,
+    email: member.email,
+    password,
+    roles,
+  });
+
   return createSessionAndRedirect(
     {
-      roles: getRolesForMember(member.id),
+      roles,
       memberId: member.id,
       name: member.name,
       email: member.email,
@@ -90,37 +182,61 @@ export async function loginAction(_: AuthFormState, formData: FormData): Promise
   );
 }
 
-export async function validateExistingMemberAction(_: AuthFormState, formData: FormData): Promise<AuthFormState> {
-  return loginAction(_, formData);
-}
-
 export async function requestMemberAccessAction(_: AuthFormState, formData: FormData): Promise<AuthFormState> {
   const name = normalize(formData.get("name"));
   const email = normalize(formData.get("email"));
   const phone = normalize(formData.get("phone"));
   const neighborhood = normalize(formData.get("neighborhood"));
+  const password = normalize(formData.get("password"));
+  const passwordConfirmation = normalize(formData.get("passwordConfirmation"));
 
   if (!name || !email || !phone || !neighborhood) {
     return { status: "error", message: "Preencha nome, email, telefone e bairro para abrir seu cadastro." };
   }
 
-  const importedMember = findImportedMember(email, phone);
+  const passwordError = validatePassword(password, passwordConfirmation);
 
-  if (importedMember) {
+  if (passwordError) {
+    return { status: "error", message: passwordError };
+  }
+
+  if (findImportedMemberByEmail(email)) {
     return {
       status: "error",
-      message: "Esse cadastro ja existe na base importada. Faca login com email e telefone cadastrados.",
+      message: "Esse email ja esta no cadastro da igreja. Use a aba de validacao para confirmar sua conta.",
     };
   }
 
-  const temporaryMemberId = `pending-${name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "") || "member"}`;
+  const existingStoredAccount = await findStoredAccountByEmail(email);
+
+  if (existingStoredAccount) {
+    return {
+      status: "error",
+      message: "Ja existe um acesso criado com esse email. Tente entrar ou fale com a secretaria.",
+    };
+  }
+
+  const createdAccess = await createSignupAccess({
+    name,
+    email,
+    phone,
+    neighborhood,
+    password,
+  });
+
+  if (!createdAccess) {
+    return {
+      status: "error",
+      message: "Nao foi possivel abrir seu cadastro agora. Tente novamente em instantes.",
+    };
+  }
 
   return createSessionAndRedirect(
     {
-      roles: ["member_common"],
-      memberId: temporaryMemberId,
-      name,
-      email,
+      roles: createdAccess.account.roles,
+      memberId: createdAccess.account.memberId,
+      name: createdAccess.account.name,
+      email: createdAccess.account.email,
       source: "signup",
     },
     formData.get("next"),

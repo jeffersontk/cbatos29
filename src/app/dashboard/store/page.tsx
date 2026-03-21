@@ -12,28 +12,28 @@ export default function StorePage() {
 
   return (
     <DashboardLayout
-      title="Loja online com retirada"
-      subtitle="A loja entra como operacao leve: catalogo, pedido, separacao e retirada concentrada na igreja."
+      title="Loja"
+      subtitle="Catalogo, pedidos e retirada."
       actions={[
-        { label: "Ver calendario", href: "/dashboard/calendar", variant: "outline" },
-        { label: "Ver membros", href: "/dashboard/members", variant: "secondary" },
+        { label: "Calendario", href: "/dashboard/calendar", variant: "outline" },
+        { label: "Membros", href: "/dashboard/members", variant: "secondary" },
       ]}
     >
-      <section className="grid gap-4 md:grid-cols-3">
-        <KpiCard title="Produtos ativos" value={String(storeProducts.length)} helper="Catalogo inicial para pedidos simples." icon={ShoppingBag} />
-        <KpiCard title="Pedidos em aberto" value={String(storeOrders.length)} helper="Pedidos que precisam ser separados e entregues." icon={Package} />
-        <KpiCard title="Prontos para retirada" value={String(readyOrders)} helper="Fluxo alinhado com o calendario da igreja." icon={Truck} />
+      <section className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <KpiCard title="Produtos ativos" value={String(storeProducts.length)} helper="Itens disponiveis no catalogo." icon={ShoppingBag} />
+        <KpiCard title="Pedidos em aberto" value={String(storeOrders.length)} helper="Pedidos aguardando separacao ou entrega." icon={Package} />
+        <KpiCard title="Prontos para retirada" value={String(readyOrders)} helper="Pedidos liberados para entrega." icon={Truck} />
       </section>
 
       <section className="grid gap-6 xl:grid-cols-[1fr_1.2fr]">
         <Card className="border-border/70">
           <CardHeader>
-            <CardTitle className="text-xl">Catalogo atual</CardTitle>
+            <CardTitle className="text-xl">Catalogo</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
             {storeProducts.map((product) => (
               <div key={product.id} className="rounded-2xl border border-border/70 bg-background p-4">
-                <div className="mb-3 flex items-start justify-between gap-3">
+                <div className="mb-3 flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
                   <div>
                     <p className="font-semibold text-foreground">{product.name}</p>
                     <p className="text-sm text-muted-foreground">{product.category}</p>

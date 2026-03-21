@@ -14,34 +14,22 @@ interface DashboardLayoutProps {
   children: ReactNode;
   title: string;
   subtitle?: string;
-  eyebrow?: string;
   actions?: DashboardAction[];
 }
 
-export default function DashboardLayout({
-  children,
-  title,
-  subtitle,
-  eyebrow = "Gestão da igreja",
-  actions,
-}: DashboardLayoutProps) {
+export default function DashboardLayout({ children, title, subtitle, actions }: DashboardLayoutProps) {
   return (
-    <div className="space-y-8">
-      <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
-        <div className="space-y-3">
-          <span className="inline-flex rounded-full border border-primary/20 bg-primary/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-primary">
-            {eyebrow}
-          </span>
-          <div className="space-y-2">
-            <h1 className="text-3xl font-semibold tracking-tight text-foreground md:text-4xl">{title}</h1>
-            {subtitle ? <p className="max-w-3xl text-base text-muted-foreground">{subtitle}</p> : null}
-          </div>
+    <div className="space-y-6 sm:space-y-8">
+      <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+        <div className="space-y-2">
+          <h1 className="text-2xl font-semibold tracking-tight text-foreground sm:text-3xl md:text-4xl">{title}</h1>
+          {subtitle ? <p className="max-w-3xl text-sm text-muted-foreground sm:text-base">{subtitle}</p> : null}
         </div>
 
         {actions?.length ? (
-          <div className="flex flex-wrap gap-3">
+          <div className="grid gap-3 sm:flex sm:flex-wrap lg:w-auto">
             {actions.map((action) => (
-              <Button key={action.href} asChild variant={action.variant ?? "default"}>
+              <Button key={action.href} asChild variant={action.variant ?? "default"} className="w-full sm:w-auto">
                 <Link href={action.href}>{action.label}</Link>
               </Button>
             ))}

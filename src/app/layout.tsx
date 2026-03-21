@@ -6,9 +6,8 @@ import "@fontsource/roboto/700.css";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "CB Atos 29 | Plataforma da Igreja",
-  description:
-    "Site institucional e plataforma de gestao da CB Atos 29 para membros, EBD, celulas, ministerios, eventos, calendario e loja.",
+  title: "CB Atos 29 | Comunidade Batista",
+  description: "Igreja em Campo Grande, RJ, vivendo o Evangelho no dia a dia, em comunhao, discipulado e servico.",
 };
 
 export default function RootLayout({

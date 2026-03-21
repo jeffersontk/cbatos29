@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import type { ChangeEvent } from "react";
 import { useMemo, useRef, useState } from "react";
@@ -68,16 +68,16 @@ const TEMPLATE_HEADERS = [
 
 const TEMPLATE_ROWS = [
   [
-    "João da Silva",
+    "Joao da Silva",
     "joao.silva@igreja.local",
     "(21) 99999-0001",
     "Campo Grande",
     "Ativo",
-    "Integrado na recepção",
-    "Março de 2025",
+    "Integrado na recepcao",
+    "Marco de 2025",
     "Fundamentos",
     "Videira",
-    "Recepção|Intercessão",
+    "Recepcao|Intercessao",
     "12 de abril",
   ],
   [
@@ -121,13 +121,10 @@ const HEADER_MAP: Record<string, keyof CsvMemberDraft> = {
   turmaebd: "ebdClass",
   ebdclass: "ebdClass",
   celula: "cell",
-  célula: "cell",
   cell: "cell",
   ministerios: "ministries",
-  ministérios: "ministries",
   ministries: "ministries",
   aniversario: "birthday",
-  aniversário: "birthday",
   birthday: "birthday",
 };
 
@@ -271,15 +268,15 @@ function makeImportedMember(draft: CsvMemberDraft, line: number): Member {
     id: `csv-${Date.now()}-${line}`,
     name: draft.name?.trim() || "",
     email: draft.email?.trim().toLowerCase() || "",
-    phone: draft.phone?.trim() || "Não informado",
-    neighborhood: draft.neighborhood?.trim() || "Não informado",
+    phone: draft.phone?.trim() || "Nao informado",
+    neighborhood: draft.neighborhood?.trim() || "Nao informado",
     status: normalizeStatus(draft.status),
     journeyStep: draft.journeyStep?.trim() || "Importado via CSV",
     joinedAt: draft.joinedAt?.trim() || formatCurrentMonthYear(),
     ebdClass: draft.ebdClass?.trim() || "Sem turma definida",
-    cell: draft.cell?.trim() || "Sem célula definida",
+    cell: draft.cell?.trim() || "Sem celula definida",
     ministries: splitMinistries(draft.ministries),
-    birthday: draft.birthday?.trim() || "Não informado",
+    birthday: draft.birthday?.trim() || "Nao informado",
   };
 }
 
@@ -324,7 +321,7 @@ export default function MembersManagementClient({
           fileName: file.name,
           importedCount: 0,
           skippedCount: 1,
-          issues: [{ line: 1, message: "O arquivo precisa ter cabeçalho e pelo menos uma linha de dados." }],
+          issues: [{ line: 1, message: "O arquivo precisa ter cabecalho e pelo menos uma linha de dados." }],
         });
         setLastImportedMembers([]);
         return;
@@ -341,7 +338,7 @@ export default function MembersManagementClient({
           issues: [
             {
               line: 1,
-              message: "Nenhuma coluna reconhecida. Use cabeçalhos como nome, email, telefone, bairro, status, ebd e celula.",
+              message: "Nenhuma coluna reconhecida. Use cabecalhos como nome, email, telefone, bairro, status, ebd e celula.",
             },
           ],
         });
@@ -360,17 +357,17 @@ export default function MembersManagementClient({
         const email = draft.email?.trim().toLowerCase();
 
         if (!name) {
-          issues.push({ line, message: "Linha ignorada: o campo nome é obrigatório." });
+          issues.push({ line, message: "Linha ignorada: o campo nome e obrigatorio." });
           return;
         }
 
         if (!email) {
-          issues.push({ line, message: `Linha de ${name} ignorada: o campo email é obrigatório.` });
+          issues.push({ line, message: `Linha de ${name} ignorada: o campo email e obrigatorio.` });
           return;
         }
 
         if (existingEmails.has(email)) {
-          issues.push({ line, message: `Linha de ${name} ignorada: já existe um membro com o email ${email}.` });
+          issues.push({ line, message: `Linha de ${name} ignorada: ja existe um membro com o email ${email}.` });
           return;
         }
 
@@ -421,30 +418,30 @@ export default function MembersManagementClient({
 
   return (
     <DashboardLayout
-      title="Gestão de membros"
-      subtitle="Cadastre pessoas, acompanhe integração, conecte com células, EBD e ministérios e mantenha o cuidado pastoral visível."
+      title="Membros"
+      subtitle="Cadastro, acompanhamento e integracao."
       actions={[
-        { label: "Ver calendário", href: "/dashboard/calendar", variant: "outline" },
-        { label: "Ver celulas", href: "/dashboard/cells", variant: "secondary" },
+        { label: "Calendario", href: "/dashboard/calendar", variant: "outline" },
+        { label: "Celulas", href: "/dashboard/cells", variant: "secondary" },
       ]}
     >
-      <section className="grid gap-4 md:grid-cols-3">
+      <section className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         <KpiCard
           title="Membros ativos"
           value={String(activeMembers)}
-          helper="Pessoas já consolidadas no fluxo de cuidado e serviço."
+          helper="Pessoas ativas no cuidado da igreja."
           icon={Users}
         />
         <KpiCard
           title="Em integracao"
           value={String(integrationFlow)}
-          helper="Novos membros que ainda precisam concluir passos iniciais."
+          helper="Pessoas em acolhimento e acompanhamento."
           icon={UserPlus}
         />
         <KpiCard
           title="Em cuidado"
           value={String(careFlow)}
-          helper="Acompanhamentos que não podem sumir do radar da liderança."
+          helper="Pessoas que exigem atencao mais de perto."
           icon={HeartHandshake}
         />
       </section>
@@ -459,16 +456,16 @@ export default function MembersManagementClient({
                   Importar membros por CSV
                 </CardTitle>
                 <p className="text-sm text-muted-foreground">
-                  Aceita arquivo com separador por ponto e vírgula ou vírgula. Colunas reconhecidas: nome, email, telefone, bairro, status, jornada, desde, ebd, celula, ministerios e aniversario.
+                  Importe a base com nome, contato, bairro, turma, celula e ministerios.
                 </p>
               </div>
 
-              <div className="flex flex-wrap gap-3">
-                <Button type="button" variant="outline" onClick={handleDownloadTemplate}>
+              <div className="grid w-full gap-3 sm:flex sm:flex-wrap lg:w-auto">
+                <Button type="button" variant="outline" className="w-full sm:w-auto" onClick={handleDownloadTemplate}>
                   <Download className="mr-2 h-4 w-4" />
                   Baixar modelo
                 </Button>
-                <Button type="button" onClick={() => fileInputRef.current?.click()} disabled={isImporting}>
+                <Button type="button" className="w-full sm:w-auto" onClick={() => fileInputRef.current?.click()} disabled={isImporting}>
                   <Upload className="mr-2 h-4 w-4" />
                   {isImporting ? "Importando..." : "Selecionar CSV"}
                 </Button>
@@ -489,14 +486,14 @@ export default function MembersManagementClient({
               </div>
 
               <div className="rounded-2xl border border-dashed border-border bg-muted/40 p-4">
-                <p className="font-medium text-foreground">Formato sugerido para ministérios</p>
-                <p className="mt-1">Use múltiplos ministérios no mesmo campo separados por `|`, vírgula ou ponto e vírgula.</p>
+                <p className="font-medium text-foreground">Ministerios no mesmo campo</p>
+                <p className="mt-1">Use mais de um ministerio no mesmo campo, separado por `|`, virgula ou ponto e virgula.</p>
               </div>
 
               <div className="rounded-2xl border border-amber-200 bg-amber-50 p-4 text-amber-800">
-                <p className="font-medium">Estado atual</p>
+                <p className="font-medium">Observacao</p>
                 <p className="mt-1">
-                  O importador já incorpora os registros na grade da tela, mas ainda não grava em banco. Isso entra na próxima etapa quando ligarmos a persistência real.
+                  Os registros importados entram primeiro nesta tela para conferencia.
                 </p>
               </div>
             </CardContent>
@@ -524,7 +521,7 @@ export default function MembersManagementClient({
                 ),
               },
               {
-                header: "Conexões",
+                header: "Conexoes",
                 cell: (member) => (
                   <div className="space-y-1 text-sm">
                     <p>{member.ebdClass}</p>
@@ -549,7 +546,7 @@ export default function MembersManagementClient({
         <div className="space-y-6">
           <Card className="border-border/70">
             <CardHeader>
-              <CardTitle className="text-xl">Resultado da importação</CardTitle>
+              <CardTitle className="text-xl">Resultado da importacao</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               {report ? (
@@ -559,7 +556,7 @@ export default function MembersManagementClient({
                     <div className="mt-3 flex flex-wrap gap-2">
                       <StatusBadge label={`${report.importedCount} importados`} tone="success" />
                       <StatusBadge label={`${report.skippedCount} ignorados`} tone={report.skippedCount ? "warning" : "info"} />
-                      {lastImportedMembers.length ? <StatusBadge label="Sessão atual" tone="info" /> : null}
+                      {lastImportedMembers.length ? <StatusBadge label="Desta importacao" tone="info" /> : null}
                     </div>
                   </div>
 
@@ -583,20 +580,20 @@ export default function MembersManagementClient({
                     <div className="rounded-2xl border border-emerald-200 bg-emerald-50 p-4 text-sm text-emerald-800">
                       <div className="flex items-start gap-2">
                         <CheckCircle2 className="mt-0.5 h-4 w-4 flex-shrink-0" />
-                        <span>Importação concluída sem conflitos.</span>
+                        <span>Importacao concluida sem conflitos.</span>
                       </div>
                     </div>
                   )}
 
                   {lastImportedMembers.length ? (
                     <Button type="button" variant="outline" className="w-full" onClick={resetImportedBatch}>
-                      Remover lote importado desta sessão
+                      Remover lote desta importacao
                     </Button>
                   ) : null}
                 </>
               ) : (
                 <div className="rounded-2xl border border-dashed border-border bg-muted/30 p-4 text-sm text-muted-foreground">
-                  Nenhum CSV importado nesta sessão ainda.
+                  Nenhum CSV importado ainda.
                 </div>
               )}
             </CardContent>
@@ -607,9 +604,9 @@ export default function MembersManagementClient({
               <CardTitle className="text-xl">Interesse ministerial</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
-              {ministryInterests.map((interest) => (
-                <div key={interest.id} className="rounded-2xl border border-border/70 bg-background p-4">
-                  <div className="mb-2 flex items-center justify-between gap-3">
+                {ministryInterests.map((interest) => (
+                  <div key={interest.id} className="rounded-2xl border border-border/70 bg-background p-4">
+                  <div className="mb-2 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                     <p className="font-semibold text-foreground">{interest.memberName}</p>
                     <StatusBadge
                       label={interest.status}
@@ -627,5 +624,7 @@ export default function MembersManagementClient({
     </DashboardLayout>
   );
 }
+
+
 
 

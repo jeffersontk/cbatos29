@@ -5,19 +5,19 @@ import { Button } from "@/components/ui/button";
 
 const values = [
   {
-    icon: Heart,
-    title: "Comunhao",
-    description: "Uma igreja local que cuida das pessoas de perto, em cultos, celulas e relacionamentos reais.",
-  },
-  {
     icon: Book,
-    title: "Ensino",
-    description: "EBD organizada com turmas, materiais, professores e acompanhamento da caminhada de cada aluno.",
+    title: "Cristo e o centro",
+    description: "Tudo comeca e termina em Jesus. Ele e a razao da nossa fe, da nossa esperanca e da nossa missao.",
   },
   {
     icon: Users,
-    title: "Missao",
-    description: "Membros servindo com clareza nos ministerios, eventos e frentes que a igreja precisa fortalecer.",
+    title: "Pessoas sao o foco",
+    description: "Acreditamos que cada vida importa para Deus. Por isso caminhamos juntos, cuidando uns dos outros.",
+  },
+  {
+    icon: Heart,
+    title: "Amor e a nossa arma",
+    description: "Servimos, acolhemos e alcancamos pessoas atraves do amor de Cristo.",
   },
 ];
 
@@ -26,11 +26,16 @@ export default function AboutSection() {
     <section id="sobre" className="bg-background py-24">
       <div className="container mx-auto px-4">
         <div className="mx-auto mb-14 max-w-4xl space-y-6 text-center">
-          <h2 className="text-primary">Quem Somos</h2>
+          <h2 className="text-primary">Mais do que um lugar, uma familia.</h2>
           <p className="text-lg leading-relaxed text-muted-foreground">
-            A CB Atos 29 e uma comunidade batista comprometida com o Evangelho de Cristo. O projeto desta plataforma nasce para sustentar o cuidado da igreja com mais ordem, visibilidade e servico.
+            A Comunidade Batista Atos 29 acredita que o Evangelho nao e apenas algo para ouvir aos domingos, mas para viver todos os dias.
           </p>
-          <p className="text-xl font-semibold text-foreground">&ldquo;Ser igreja alem das quatro paredes, vivendo Atos 29 hoje.&rdquo;</p>
+          <p className="text-lg leading-relaxed text-muted-foreground">
+            Seguimos o exemplo da igreja descrita em Atos: uma comunidade que caminha junta, cresce na Palavra, serve com amor e alcanca pessoas com a mensagem de Jesus.
+          </p>
+          <p className="text-lg leading-relaxed text-muted-foreground">
+            Aqui acreditamos em relacionamentos verdadeiros, discipulado e uma fe que se expressa na pratica.
+          </p>
         </div>
 
         <div className="grid gap-8 md:grid-cols-3">
@@ -51,7 +56,7 @@ export default function AboutSection() {
 
         <div className="mt-12 text-center">
           <Button asChild size="lg">
-            <Link href="/login">Fazer login</Link>
+            <Link href="/#plataforma">Venha nos conhecer</Link>
           </Button>
         </div>
       </div>

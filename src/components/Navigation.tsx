@@ -9,10 +9,10 @@ import { Button } from "@/components/ui/button";
 
 const sectionLinks = [
   { name: "Sobre", hash: "#sobre" },
-  { name: "EBD", hash: "#ebd" },
-  { name: "Celulas", hash: "#celulas" },
-  { name: "Eventos", hash: "#eventos" },
-  { name: "Ministerios", hash: "#ministerios" },
+  { name: "Palavra", hash: "#ebd" },
+  { name: "Vida na vida", hash: "#celulas" },
+  { name: "Celebracoes", hash: "#eventos" },
+  { name: "Servico", hash: "#ministerios" },
 ];
 
 function resolveHash(pathname: string, hash: string) {

@@ -13,8 +13,10 @@ export default function MinistriesSection() {
           <div className="mb-4 inline-flex items-center justify-center rounded-2xl bg-primary-light p-3">
             <Heart className="h-8 w-8 text-primary" />
           </div>
-          <h2 className="mb-4 text-primary">Faca Parte do Reino</h2>
-          <p className="text-lg text-muted-foreground">O membro pode demonstrar interesse, e a lideranca acompanha o processo ate a integracao real no ministerio.</p>
+          <h2 className="mb-4 text-primary">Servindo com amor</h2>
+          <p className="text-lg text-muted-foreground">
+            Servimos, acolhemos e alcancamos pessoas atraves do amor de Cristo, com os dons que Ele confiou a cada um.
+          </p>
         </div>
 
         <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">

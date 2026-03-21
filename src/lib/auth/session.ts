@@ -20,7 +20,7 @@ export interface PreviewAccessAccount {
   id: string;
   name: string;
   email: string;
-  accessKey: string;
+  password: string;
   roles: AppUserRole[];
   memberId?: string;
 }
@@ -60,9 +60,9 @@ const dashboardRouteRules: Array<{ prefix: string; roles: AppUserRole[] }> = [
 export const previewAccessAccounts: PreviewAccessAccount[] = [
   {
     id: "staff-001",
-    name: "Equipe de Gestao",
-    email: "gestao@cbatos29.local",
-    accessKey: "atos29-gestao",
+    name: "Equipe da Igreja",
+    email: "equipe@cbatos29.local",
+    password: "atos29-equipe",
     roles: ["admin"],
   },
 ];

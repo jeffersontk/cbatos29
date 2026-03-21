@@ -1,27 +1,33 @@
 import Link from "next/link";
-import { ArrowRight, Calendar, LogIn, ShieldCheck } from "lucide-react";
+import { ArrowRight, Calendar, Heart, Users } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 
 const accessCards = [
   {
-    title: "Login unificado",
-    description: "Um unico acesso para admin, lideres, professores e membros comuns.",
-    href: "/login",
-    icon: LogIn,
+    title: "Venha nos conhecer",
+    description: "Sera uma alegria receber voce e apresentar de perto a nossa familia na fe.",
+    href: "/#sobre",
+    buttonLabel: "Conhecer a igreja",
+    icon: Heart,
+    variant: "default" as const,
   },
   {
-    title: "Calendario da igreja",
-    description: "Cultos, aniversariantes, eventos e retiradas em uma agenda comum.",
+    title: "Participe de uma celebracao",
+    description: "Nossos encontros sao tempo de adoracao, Palavra e comunhao para toda a familia.",
     href: "/calendar",
+    buttonLabel: "Ver agenda",
     icon: Calendar,
+    variant: "outline" as const,
   },
   {
-    title: "Permissoes por role",
-    description: "As roles podem ser acumulativas, e o sistema libera dashboard ou portal pessoal conforme a combinacao de responsabilidades.",
-    href: "/login",
-    icon: ShieldCheck,
+    title: "Caminhe conosco",
+    description: "Ha espaco para voce viver relacionamentos verdadeiros, discipulado e cuidado mutuo.",
+    href: "/#celulas",
+    buttonLabel: "Dar o primeiro passo",
+    icon: Users,
+    variant: "outline" as const,
   },
 ];
 
@@ -29,11 +35,12 @@ export default function OfferingsSection() {
   return (
     <section id="plataforma" className="bg-muted/30 py-24">
       <div className="container mx-auto px-4">
-        <div className="mx-auto mb-12 max-w-3xl text-center">
-          <h2 className="mb-6 text-primary">Plataforma da Igreja</h2>
+        <div className="mx-auto mb-12 max-w-3xl space-y-4 text-center">
+          <h2 className="text-primary">Voce e bem-vindo aqui.</h2>
           <p className="text-lg text-muted-foreground">
-            O projeto deixa de ser so um site institucional e passa a ser o hub digital da igreja.
+            Independentemente da sua historia, acreditamos que Deus tem algo novo para sua vida.
           </p>
+          <p className="text-lg text-muted-foreground">Venha fazer parte dessa familia e caminhar conosco.</p>
         </div>
 
         <div className="mx-auto grid max-w-6xl gap-6 md:grid-cols-3">
@@ -48,10 +55,10 @@ export default function OfferingsSection() {
                   </div>
                   <h3 className="text-xl font-semibold">{card.title}</h3>
                   <p className="mt-3 text-sm text-muted-foreground">{card.description}</p>
-                  <Button asChild className="mt-6 w-full" variant={card.href === "/login" ? "default" : "outline"}>
+                  <Button asChild className="mt-6 w-full" variant={card.variant}>
                     <Link href={card.href}>
                       <ArrowRight className="mr-2 h-4 w-4" />
-                      {card.href === "/calendar" ? "Ver agenda" : "Entrar"}
+                      {card.buttonLabel}
                     </Link>
                   </Button>
                 </CardContent>

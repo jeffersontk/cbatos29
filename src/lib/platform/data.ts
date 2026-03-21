@@ -24,80 +24,82 @@ import type { AppUserRole } from "@/lib/auth/session";
 type MemberSnapshotOptions = {
   fallbackName?: string;
   fallbackEmail?: string;
+  fallbackPhone?: string;
+  fallbackNeighborhood?: string;
   source?: "imported" | "signup";
 };
 
 export const churchProfile = {
   name: "CB Atos 29",
   subtitle: "Comunidade Batista",
-  mission: "Uma igreja para viver o Evangelho todos os dias.",
+  mission: "Somos uma família de amor e fé",
   address: "Rua Prof. Carlos Boisson, 495, Campo Grande, RJ",
   sundayServices: ["10h45", "17h00", "19h30"],
-  ebdSchedule: "Domingos as 9h30",
-  streamLabel: "Cultos, materiais e comunicacao organizados em uma so plataforma.",
+  ebdSchedule: "Domingos as 9h00",
+  streamLabel: "Cultos, materiais e a vida da igreja acompanhados em um so lugar.",
 };
 
 export const platformModules: PlatformModule[] = [
   {
     slug: "overview",
-    title: "Visao geral",
-    description: "Indicadores da plataforma, mapa dos modulos e prioridades tecnicas.",
+    title: "Painel",
+    description: "Resumo dos numeros e das areas em uso hoje.",
     stage: "ativo",
     href: "/dashboard",
   },
   {
     slug: "members",
     title: "Membros",
-    description: "Cadastro, importacao em CSV, cuidado pastoral e perfil familiar.",
+    description: "Cadastro, acompanhamento e cuidado pastoral.",
     stage: "ativo",
     href: "/dashboard/members",
   },
   {
     slug: "ebd",
     title: "EBD",
-    description: "Turmas, materiais, inscricoes, check-in e acompanhamento de frequencia.",
+    description: "Turmas, materiais, inscricoes e frequencia.",
     stage: "ativo",
     href: "/dashboard/ebd",
   },
   {
     slug: "events",
     title: "Eventos",
-    description: "Inscricoes gratuitas ou pagas, comprovacao e operacao no dia do evento.",
+    description: "Inscricoes, pagamentos e acompanhamento dos encontros.",
     stage: "ativo",
     href: "/dashboard/events",
   },
   {
     slug: "cells",
     title: "Celulas",
-    description: "Mapa de celulas, vagas, familias conectadas e abertura de novas frentes.",
+    description: "Bairros, vagas e acompanhamento das celulas.",
     stage: "ativo",
     href: "/dashboard/cells",
   },
   {
     slug: "calendar",
     title: "Calendario",
-    description: "Agenda compartilhada da igreja com cultos, eventos e aniversariantes.",
+    description: "Cultos, encontros, aniversariantes e retiradas.",
     stage: "ativo",
     href: "/dashboard/calendar",
   },
   {
     slug: "store",
     title: "Loja",
-    description: "Encomendas online com retirada presencial e acompanhamento do pedido.",
+    description: "Catalogo, pedidos e retirada.",
     stage: "planejado",
     href: "/dashboard/store",
   },
   {
     slug: "ministries",
     title: "Ministerios",
-    description: "Interesses, escalas, integracao de voluntarios e acompanhamento dos lideres.",
+    description: "Vagas, interesses e equipes em acompanhamento.",
     stage: "ativo",
     href: "/dashboard/ministries",
   },
   {
     slug: "finance",
     title: "Financeiro",
-    description: "Modulo reservado para a proxima fase com cobrancas e conciliacao.",
+    description: "Area financeira em preparo.",
     stage: "em-breve",
     href: "/dashboard/finance",
   },
@@ -460,7 +462,7 @@ export const calendarEntries: CalendarEntry[] = [
     id: "cal-002",
     title: "EBD presencial",
     date: "22 de marco de 2026",
-    time: "09h30",
+    time: "09h00",
     category: "EBD",
     details: "Todas as turmas funcionando simultaneamente.",
   },
@@ -657,29 +659,6 @@ const memberRolesByMemberId: Record<string, AppUserRole[]> = {
   "m-005": ["member_common", "ministry_leader", "cell_leader", "ebd_teacher"],
 };
 
-export const dashboardMetrics: DashboardMetric[] = [
-  {
-    label: "Membros acompanhados",
-    value: `${members.length}`,
-    helper: "Base inicial organizada para cadastro, integracao e cuidado.",
-  },
-  {
-    label: "Turmas da EBD",
-    value: `${ebdClasses.length}`,
-    helper: "Com inscricao, materiais e presenca no mesmo fluxo.",
-  },
-  {
-    label: "Eventos em operacao",
-    value: `${events.length}`,
-    helper: "Inclui eventos gratuitos e pagos com comprovacao de inscricao.",
-  },
-  {
-    label: "Escalas ativas",
-    value: `${Object.values(servingAssignmentsByMemberId).flat().length}`,
-    helper: "Voluntarios conectados com os lideres dos ministerios.",
-  },
-];
-
 function buildAuthAccess(
   source: MemberSnapshotOptions["source"],
   hasImportedMember: boolean,
@@ -688,7 +667,7 @@ function buildAuthAccess(
   if (source === "signup" && !hasImportedMember) {
     return {
       accountStatus: "Cadastro em analise",
-      loginHint: "A secretaria pode validar sua conta e liberar todos os modulos depois da importacao.",
+      loginHint: "Seu acesso ja foi criado. Use seu email e sua senha nas proximas entradas.",
       canValidateExistingMember: true,
       availableRoles,
     };
@@ -696,7 +675,7 @@ function buildAuthAccess(
 
   return {
     accountStatus: "Conta validada",
-    loginHint: "Use email e telefone cadastrados para entrar novamente.",
+    loginHint: "Use seu email e sua senha para entrar novamente.",
     canValidateExistingMember: true,
     availableRoles,
   };
@@ -707,8 +686,8 @@ function buildFallbackMember(memberId: string, options: MemberSnapshotOptions): 
     id: memberId,
     name: options.fallbackName ?? "Novo cadastro",
     email: options.fallbackEmail ?? "cadastro@cbatos29.local",
-    phone: "A confirmar",
-    neighborhood: "A definir",
+    phone: options.fallbackPhone ?? "A confirmar",
+    neighborhood: options.fallbackNeighborhood ?? "A definir",
     status: "Em integracao",
     journeyStep: "Cadastro enviado e aguardando validacao da igreja.",
     joinedAt: "Marco de 2026",
@@ -814,22 +793,21 @@ export const memberPortalSnapshot: MemberPortalSnapshot = getMemberSnapshot();
 export const roadmap = [
   {
     title: "Autenticacao real",
-    description: "Trocar o acesso mock por credenciais persistidas, recuperacao de senha e papeis por usuario.",
+    description: "Concluir senha, recuperacao de conta e entrada definitiva dos usuarios.",
   },
   {
     title: "Persistencia e auditoria",
-    description: "Salvar membros, familia, escalas, vinculos de celula e historico de inscricoes em banco.",
+    description: "Guardar membros, familia, escalas, celulas e inscricoes com seguranca.",
   },
   {
     title: "Pagamentos e uploads",
-    description: "Adicionar checkout para eventos e loja, alem de materiais da EBD em armazenamento real.",
+    description: "Concluir pagamentos, comprovacoes e envio de materiais.",
   },
 ];
 
 export function getDashboardSnapshot() {
   return {
     churchProfile,
-    dashboardMetrics,
     platformModules,
     members,
     ebdClasses,

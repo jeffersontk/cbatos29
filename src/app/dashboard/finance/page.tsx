@@ -7,25 +7,25 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 export default function FinancePage() {
   return (
     <DashboardLayout
-      title="Financeiro em fase futura"
-      subtitle="Você deixou o financeiro para um próximo ciclo, então esta área foi mantida como trilha técnica e de produto, sem misturar isso com a v1."
-      actions={[{ label: "Voltar à visão geral", href: "/dashboard", variant: "outline" }]}
+      title="Financeiro"
+      subtitle="Estamos preparando esta area."
+      actions={[{ label: "Painel", href: "/dashboard", variant: "outline" }]}
     >
-      <section className="grid gap-4 md:grid-cols-3">
-        <KpiCard title="Cobrança de eventos" value="Preparado" helper="Fluxo de eventos já considera gratuitos e pagos." icon={CreditCard} />
-        <KpiCard title="Loja com retirada" value="Preparada" helper="Pedidos e status já estão modelados para evoluir." icon={Clock3} />
-        <KpiCard title="Governança" value="Necessária" helper="Financeiro exige permissões e rastreabilidade mais duras." icon={ShieldCheck} />
+      <section className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <KpiCard title="Eventos pagos" value="Preparado" helper="A base ja considera cobrancas por evento." icon={CreditCard} />
+        <KpiCard title="Retirada da loja" value="Preparada" helper="Pedidos e status ja estao organizados." icon={Clock3} />
+        <KpiCard title="Controle" value="Em preparo" helper="Tesouraria e acompanhamento ainda estao sendo organizados." icon={ShieldCheck} />
       </section>
 
       <Card className="border-border/70">
         <CardHeader>
-          <CardTitle className="text-xl">Quando abrir este módulo</CardTitle>
+          <CardTitle className="text-xl">Quando entrar em uso</CardTitle>
         </CardHeader>
         <CardContent className="space-y-3 text-sm text-muted-foreground">
-          <p>Conciliação de pagamentos de eventos e loja.</p>
-          <p>Fluxo de dízimos e ofertas com regras próprias e auditoria.</p>
-          <p>Relatórios, centros de custo e exportação para a tesouraria.</p>
-          <p>Permissões específicas para tesouraria sem expor toda a plataforma.</p>
+          <p>Conciliacao de pagamentos de eventos e loja.</p>
+          <p>Dizimos e ofertas com regras proprias.</p>
+          <p>Relatorios para a tesouraria.</p>
+          <p>Permissoes especificas para o time financeiro.</p>
         </CardContent>
       </Card>
     </DashboardLayout>
